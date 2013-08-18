@@ -10,7 +10,8 @@ namespace MvcTest.App_Code
     public enum ConfigEnum : int
     {
         Database = 0,
-        StoredProcedure = 1
+        StoredProcedure = 1,
+        LogSetting = 2,
     }
     //ex: C:\\...\...\db.config
     //<root>
@@ -65,6 +66,18 @@ namespace MvcTest.App_Code
     internal class ConfigStrategySP : ConfigStrategy
     {
         internal ConfigStrategySP(string filepath, string nodePath, string nodeName, string nodeAttributes, string nodeID)
+        {
+            this.FilePath = filepath;
+            this.NodePath = nodePath;
+            this.NodeName = nodeName;
+            this.NodeAttributes = nodeAttributes;
+            this.NodeID = nodeID;
+        }
+    }
+
+    internal class ConfigStrategyLog : ConfigStrategy
+    {
+        internal ConfigStrategyLog(string filepath, string nodePath, string nodeName, string nodeAttributes, string nodeID)
         {
             this.FilePath = filepath;
             this.NodePath = nodePath;
