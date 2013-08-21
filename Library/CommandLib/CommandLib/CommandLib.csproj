@@ -52,6 +52,7 @@
     <Compile Include="Entity\SPParameterEntity.cs" />
     <Compile Include="Enum\CommandEnum.cs" />
     <Compile Include="Enum\Exception\BaseException.cs" />
+    <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Helper\DBHelper.cs" />
     <Compile Include="Helper\FormatHelper.cs" />
     <Compile Include="Helper\TmplHelper.cs" />
