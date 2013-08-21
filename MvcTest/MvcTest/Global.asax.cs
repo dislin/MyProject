@@ -31,6 +31,13 @@ namespace MvcTest
 
         protected void Application_Start()
         {
+             //added for log4net
+            string configFileName = AppDomain.CurrentDomain.BaseDirectory;
+            configFileName += (@"Configuration\LogSetting.config");
+            System.IO.FileInfo configFileInfo = new System.IO.FileInfo(configFileName);
+            YangLogger.SimpleLogger.Init(configFileInfo);
+
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);

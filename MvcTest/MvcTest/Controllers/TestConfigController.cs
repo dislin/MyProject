@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CommandLib.Helper;
+using YangLogger;
 
 namespace MvcTest.Controllers
 {
@@ -14,9 +15,14 @@ namespace MvcTest.Controllers
 
         public ActionResult LogConfigTest()
         {
-            ConfigHelper configLogSetting = new ConfigHelper(ConfigEnum.LogSetting, "Log4NetSetting");
-            ViewBag.limit = configLogSetting.GetValue("limit");
-            ViewBag.path = configLogSetting.GetValue("path");
+            SimpleLogger.Fatal("log output by yanghang");
+            SimpleLogger.Debug("log output by yanghang");
+            SimpleLogger.Info("log output by yanghang");
+
+            
+            //ConfigHelper configLogSetting = new ConfigHelper(ConfigEnum.LogSetting, "Log4NetSetting");
+            ViewBag.limit = "";// configLogSetting.GetValue("limit");
+            ViewBag.path = "";// configLogSetting.GetValue("path");
             return View(ViewBag);
         }
 
