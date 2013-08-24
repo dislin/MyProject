@@ -67,6 +67,7 @@
     <Compile Include="App_Code\DBHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Service\AjaxServiceController.cs" />
     <Compile Include="Controllers\TestConfigController.cs" />
     <Compile Include="Controllers\TestDBController.cs" />
     <Compile Include="Controllers\TestDropDownController.cs" />

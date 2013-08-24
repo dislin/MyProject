@@ -12,45 +12,36 @@ namespace MvcTest.Controllers
         //
         // GET: /TestDropDown/
 
+        #region TestDropDown
         public ActionResult TestDropDown(TestDropDownModel model)
         {
             List<TestMember> memberList = new List<TestMember>();
             memberList.Add(new TestMember("Leo", 1, 30, "Male"));
             memberList.Add(new TestMember("YH", 2, 28, "Female"));
-
-            var oList = from m in memberList
-                        select new
-                        {
-                            key = m.Id,
-                            name = m.Name
-                        };
-
-            model.selMemberList = new SelectList(oList, "key", "name");
+            model.selMemberList = GetMemberSelectList(memberList);
             model.oMemberList = memberList.Where(x => x.Id == model.intMemberID).ToList();
 
-            //YangLogger.SimpleLogger.Debug(model.intMemberID + " is selected");
-
-            //Request["intMemberID"] == null ? "YH" : selectedMember.Name);
-
-            //List<SelectListItem> items = new List<SelectListItem>();
-            //items.Add(new SelectListItem { Text = "LEO", Value = "LEO"Y });
-            //items.Add(new SelectListItem { Text = "Yang", Value = "Yang" });
-            //var dropdownList = new SelectList(items, "Text", "Value",
-            //    Request["cofoundersList"] == null ? "Yang" : Request["cofoundersList"]);
-            //this.ViewData["cofoundersList"] = dropdownList;
-
-            //YangLogger.SimpleLogger.Debug(dropdownList.SelectedValue + " is selected");
-
             return View(model);
-        }
+        } 
+        #endregion
 
+        #region TestDropDownJS
         public ActionResult TestDropDownJS()
         {
             TestDropDownModel model = new TestDropDownModel();
             List<TestMember> memberList = new List<TestMember>();
             memberList.Add(new TestMember("Leo", 1, 30, "Male"));
             memberList.Add(new TestMember("YH", 2, 28, "Female"));
+            model.selMemberList = GetMemberSelectList(memberList);
+            return View(model);
+        } 
+        #endregion
 
+        #region Internal Function
+
+        #region GetMemberSelectList
+        internal SelectList GetMemberSelectList(List<TestMember> memberList)
+        {
             var oList = from m in memberList
                         select new
                         {
@@ -58,9 +49,11 @@ namespace MvcTest.Controllers
                             name = m.Name
                         };
 
-            model.selMemberList = new SelectList(oList, "key", "name");
-            return View(model);
-        }
+            return (new SelectList(oList, "key", "name"));
+        }  
+        #endregion
+
+        #endregion
     }
 
     public class TestMember
