@@ -2,6 +2,5 @@ D:\workplace\MyProject\MvcTest\TestLib\bin\Debug\TestLib.dll
 D:\workplace\MyProject\MvcTest\TestLib\bin\Debug\TestLib.pdb
 D:\workplace\MyProject\MvcTest\TestLib\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\workplace\MyProject\MvcTest\TestLib\bin\Debug\Microsoft.Web.Infrastructure.xml
-D:\workplace\MyProject\MvcTest\TestLib\obj\Debug\TestLib.csprojResolveAssemblyReference.cache
 D:\workplace\MyProject\MvcTest\TestLib\obj\Debug\TestLib.dll
 D:\workplace\MyProject\MvcTest\TestLib\obj\Debug\TestLib.pdb

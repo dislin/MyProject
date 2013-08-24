@@ -1,4 +1,6 @@
-﻿@{
+﻿@using MvcTest.Models
+@model TestDropDownModel
+@{
     ViewBag.Title = "TestDropDown";
 }
 
@@ -6,7 +8,7 @@
 
 <form method="post" action="../TestDropDown/TestDropDown">
 
-@Html.DropDownList("cofoundersList")
+@Html.DropDownListFor(x => x.intMemberID, Model.selMemberList)
 
 <input type ="submit" value="OutputLog" />
 
