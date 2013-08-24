@@ -12,12 +12,11 @@ namespace MvcTest.Controllers
         //
         // GET: /TestDropDown/
 
-        public ActionResult TestDropDown()
+        public ActionResult TestDropDown(TestDropDownModel model)
         {
-            TestDropDownModel model = new TestDropDownModel();
             List<TestMember> memberList = new List<TestMember>();
-            memberList.Add(new TestMember("Leo", 1));
-            memberList.Add(new TestMember("YH", 2));
+            memberList.Add(new TestMember("Leo", 1, 30, "Male"));
+            memberList.Add(new TestMember("YH", 2, 28, "Female"));
 
             var oList = from m in memberList
                         select new
@@ -26,11 +25,10 @@ namespace MvcTest.Controllers
                             name = m.Name
                         };
 
-            int selectedVal = Request["intMemberID"] == null ? 2 : int.Parse(Request["intMemberID"]);
             model.selMemberList = new SelectList(oList, "key", "name");
-            model.intMemberID = selectedVal;
+            model.oMemberList = memberList.Where(x => x.Id == model.intMemberID).ToList();
 
-            YangLogger.SimpleLogger.Debug(model.intMemberID + " is selected");
+            //YangLogger.SimpleLogger.Debug(model.intMemberID + " is selected");
 
             //Request["intMemberID"] == null ? "YH" : selectedMember.Name);
 
@@ -46,16 +44,37 @@ namespace MvcTest.Controllers
             return View(model);
         }
 
+        public ActionResult TestDropDownJS()
+        {
+            TestDropDownModel model = new TestDropDownModel();
+            List<TestMember> memberList = new List<TestMember>();
+            memberList.Add(new TestMember("Leo", 1, 30, "Male"));
+            memberList.Add(new TestMember("YH", 2, 28, "Female"));
+
+            var oList = from m in memberList
+                        select new
+                        {
+                            key = m.Id,
+                            name = m.Name
+                        };
+
+            model.selMemberList = new SelectList(oList, "key", "name");
+            return View(model);
+        }
     }
 
     public class TestMember
     {
-        public TestMember(string name, int id)
+        public TestMember(string name, int id, int age, string sex)
         {
             this.Name = name;
             this.Id = id;
+            this.Age = age;
+            this.Sex = sex;
         }
         public string Name { get; set; }
         public int Id { get; set; }
+        public int Age { get; set; }
+        public string Sex { get; set; }
     }
 }
