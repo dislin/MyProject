@@ -15,20 +15,27 @@ namespace MvcTest.Controllers
         public ActionResult TestDropDown()
         {
             TestDropDownModel model = new TestDropDownModel();
-            List<TestMember> MemberList = new List<TestMember>();
-            MemberList.Add(new TestMember("Leo", 1));
-            MemberList.Add(new TestMember("YH", 2));
+            List<TestMember> memberList = new List<TestMember>();
+            memberList.Add(new TestMember("Leo", 1));
+            memberList.Add(new TestMember("YH", 2));
 
-            var oList = from m in MemberList
+            var oList = from m in memberList
                         select new
                         {
                             key = m.Id,
                             name = m.Name
                         };
+
+            int selectedVal = Request["intMemberID"] == null ? 2 : int.Parse(Request["intMemberID"]);
             model.selMemberList = new SelectList(oList, "key", "name");
+            model.intMemberID = selectedVal;
+
+            YangLogger.SimpleLogger.Debug(model.intMemberID + " is selected");
+
+            //Request["intMemberID"] == null ? "YH" : selectedMember.Name);
 
             //List<SelectListItem> items = new List<SelectListItem>();
-            //items.Add(new SelectListItem { Text = "LEO", Value = "LEO" });
+            //items.Add(new SelectListItem { Text = "LEO", Value = "LEO"Y });
             //items.Add(new SelectListItem { Text = "Yang", Value = "Yang" });
             //var dropdownList = new SelectList(items, "Text", "Value",
             //    Request["cofoundersList"] == null ? "Yang" : Request["cofoundersList"]);
