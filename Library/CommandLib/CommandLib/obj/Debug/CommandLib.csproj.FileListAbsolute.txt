@@ -1,5 +1,0 @@
-D:\workplace\MyProject\Library\CommandLib\CommandLib\bin\Debug\CommandLib.dll
-D:\workplace\MyProject\Library\CommandLib\CommandLib\bin\Debug\CommandLib.pdb
-D:\workplace\MyProject\Library\CommandLib\CommandLib\bin\Debug\log4net.dll
-D:\workplace\MyProject\Library\CommandLib\CommandLib\obj\Debug\CommandLib.dll
-D:\workplace\MyProject\Library\CommandLib\CommandLib\obj\Debug\CommandLib.pdb
