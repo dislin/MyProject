@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\Enum\CommonEnum.cs" />
     <Compile Include="App_Code\DBHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -77,6 +78,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\TestDropDownModel.cs" />
+    <Compile Include="Models\TestRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
