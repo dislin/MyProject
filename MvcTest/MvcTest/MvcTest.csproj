@@ -14,7 +14,7 @@
     <AssemblyName>MvcTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <JSLintSkip>\js\|\Content\|\CDN\js\</JSLintSkip>
+    <JSLintSkip>\js\|\Content\|\CDN\js\|\App_Code\Mvc\</JSLintSkip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +82,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\Mvc\BasicAuthorizeAttribute.cs" />
+    <Content Include="App_Code\Mvc\ControllerFactory.cs" />
+    <Content Include="App_Code\Mvc\FunctionPointAuthorizeAttribute.cs" />
+    <Content Include="App_Code\Mvc\GCTControllerBase.cs" />
     <Content Include="CDN\js\Lib\jquery-1.10.2.js" />
     <Content Include="CDN\js\Lib\jquery-1.6.4-vsdoc.js" />
     <Content Include="CDN\js\Lib\jquery-1.6.4.js" />
