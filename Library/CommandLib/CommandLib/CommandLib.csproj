@@ -61,6 +61,7 @@
     <Compile Include="log4net\SimpleLogger.cs" />
     <Compile Include="Object\SPParameterObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\BaseExceptionController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
