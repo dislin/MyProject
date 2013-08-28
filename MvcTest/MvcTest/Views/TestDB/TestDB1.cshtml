@@ -1,6 +1,28 @@
-﻿@{
+﻿@using MvcTest.Models;
+@model List<TestRole>
+@{
     ViewBag.Title = "TestDB1";
 }
 
 <h2>TestDB1</h2>
-@ViewBag.configValue
+<table>
+@{
+    if (Model.Count > 0)
+    {
+        foreach (TestRole oRole in Model)
+        {
+            <tr>
+                <td>ID: @oRole.idnum</td>
+                <td>Name: @oRole.name</td>
+                <td>Permission: @oRole.permission</td>
+                <td>Status: @oRole.status.ToString()</td>
+                <td>Delete Status: @oRole.isdelete.ToString()</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td>no records found</td></tr>
+    }
+}
+</table>

@@ -7,7 +7,9 @@ using MvcTest.App_Code;
 using CommandLib.Helper;
 using System.Data.SqlClient;
 using System.Data;
-
+using MvcTest.App_Code.Common;
+using MvcTest.Models;
+using MvcTest.App_Code.Enum;
 
 namespace MvcTest.Controllers
 {
@@ -23,12 +25,31 @@ namespace MvcTest.Controllers
             oSqlCn.ConnectionString = config.GetValue();
             SqlCommand oCmd = new SqlCommand("role_GetAllRoleData", oSqlCn);
             oCmd.CommandType = CommandType.StoredProcedure;
+            List<TestRole> oRoleList = new List<TestRole>();
             oSqlCn.Open();
             SqlDataReader oDr = oCmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            if (oDr.HasRows)
+            {
+                while (oDr.Read())
+                {
+                    TestRole oRole = new TestRole()
+                    {
+                        idnum = oDr["idnum"].ToString().ToInt(),
+                        name = oDr["name"].ToString(),
+                        permission = oDr["permission"].ToString(),
+                        status = (CommonEnum.RoleStatusEnum)oDr["status"].ToInt(),
+                        isdelete = (CommonEnum.RoleDeleteEnum)oDr["isdelete"].ToInt()
+                    };
+
+                    oRoleList.Add(oRole);
+                }
+                oDr.Close();
+            }
             oCmd.Dispose();
             oSqlCn.Dispose();
-            //ViewBag.configValue = config.GetValue();
-            return View(ViewBag);
+
+            return View(oRoleList);
         }
 
     }
