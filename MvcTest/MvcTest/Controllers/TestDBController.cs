@@ -23,7 +23,16 @@ namespace MvcTest.Controllers
             ConfigHelper config = new ConfigHelper(ConfigEnum.Database, "MainDB");
             SqlConnection oSqlCn = new SqlConnection();
             oSqlCn.ConnectionString = config.GetValue();
-            SqlCommand oCmd = new SqlCommand("role_GetAllRoleData", oSqlCn);
+            SqlCommand oCmd = new SqlCommand("role_GetRoleDataByID", oSqlCn);
+            
+            SqlParameter param = new SqlParameter();
+            param.ParameterName = "@idnum";
+            param.SqlDbType = SqlDbType.Int;
+            param.Direction = ParameterDirection.Input;
+            param.Value = 1;
+            oCmd.Parameters.Add(param);
+
+
             oCmd.CommandType = CommandType.StoredProcedure;
             List<TestRole> oRoleList = new List<TestRole>();
             oSqlCn.Open();
