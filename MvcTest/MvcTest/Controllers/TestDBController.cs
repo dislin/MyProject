@@ -10,6 +10,7 @@ using System.Data;
 using MvcTest.App_Code.Common;
 using MvcTest.Models;
 using MvcTest.App_Code.Enum;
+using System.Data.Linq;
 
 namespace MvcTest.Controllers
 {
@@ -57,6 +58,20 @@ namespace MvcTest.Controllers
             }
             oCmd.Dispose();
             oSqlCn.Dispose();
+
+            return View(oRoleList);
+        }
+
+        public ActionResult TestDB2()
+        {
+            ConfigHelper config = new ConfigHelper(ConfigEnum.Database, "MainDB");
+            DataClasses1DataContext testBO = new DataClasses1DataContext(config.GetValue());
+            ISingleResult<role_GetAllRoleDataResult> results = testBO.role_GetAllRoleData();
+            var oRoleList = new List<role_GetAllRoleDataResult>();
+            foreach (var aRole in results)
+            {
+                oRoleList.Add(aRole);
+            }
 
             return View(oRoleList);
         }
