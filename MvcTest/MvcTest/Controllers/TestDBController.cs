@@ -81,6 +81,8 @@ namespace MvcTest.Controllers
             GetListTestRole(fnDR);
             return View(oRoleList);
         }
+
+        #region Internal function
         internal void GetListTestRole(Func<IDataReader, bool> funcDRSetting)
         {
             ConfigHelper config = new ConfigHelper(ConfigEnum.Database, "MainDB");
@@ -103,7 +105,8 @@ namespace MvcTest.Controllers
             }
             oCmd.Dispose();
             oSqlCn.Dispose();
-        }
+        } 
+        #endregion
 
     }
 }
