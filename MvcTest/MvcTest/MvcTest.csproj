@@ -80,11 +80,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\DataClasses1.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataClasses1.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\TestDropDownModel.cs" />
     <Compile Include="Models\TestRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,18 +232,7 @@
     <Content Include="Views\TestDropDown\TestDropDownJS.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Models\DataClasses1.dbml.layout">
-      <DependentUpon>DataClasses1.dbml</DependentUpon>
-    </None>
-    <Content Include="Views\TestDB\TestDB2.cshtml" />
     <Content Include="Views\Upload\Upload.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\DataClasses1.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
