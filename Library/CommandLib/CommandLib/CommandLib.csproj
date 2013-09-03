@@ -43,12 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DB\DBException.cs" />
-    <Compile Include="DB\DBManager.cs" />
-    <Compile Include="DB\DBManager2.cs" />
-    <Compile Include="DB\DBManagerFactory.cs" />
-    <Compile Include="DB\DBSetting.cs" />
-    <Compile Include="DB\IDBManager.cs" />
     <Compile Include="Entity\DBEntity.cs" />
     <Compile Include="Entity\PageEntity.cs" />
     <Compile Include="Entity\SPParameterEntity.cs" />
