@@ -1,0 +1,28 @@
+﻿@using MvcTest.Models;
+@model List<role_GetAllRoleDataResult>
+@{
+    ViewBag.Title = "TestDB2";
+}
+
+<h2>TestDB1</h2>
+<table>
+@{
+    if (Model.Count > 0)
+    {
+        foreach (var oRole in Model)
+        {
+            <tr>
+                <td>ID: @oRole.idnum</td>
+                <td>Name: @oRole.name</td>
+                <td>Permission: @oRole.permission</td>
+                <td>Status: @oRole.status.ToString()</td>
+                <td>Delete Status: @oRole.isdelete.ToString()</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td>no records found</td></tr>
+    }
+}
+</table>
