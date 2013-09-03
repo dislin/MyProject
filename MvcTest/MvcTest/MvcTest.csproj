@@ -242,6 +242,7 @@
     </None>
     <Content Include="Views\TestDB\TestDB2.cshtml" />
     <Content Include="Views\Upload\Upload.cshtml" />
+    <Content Include="Views\Upload\UploadSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\DataClasses1.dbml">

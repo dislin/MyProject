@@ -51,12 +51,12 @@ namespace MvcTest.Controllers
             var encoding = context.Request.ContentEncoding;
             var processor = new UploadProcessor(workerRequest);
             processor.StreamToDisk(context, encoding, path);
-            return View("Upload");
+            return View("UploadSuccess");
         }
 
     }
 
-    internal class UploadProcessor
+    public class UploadProcessor
     {
         private byte[] _buffer;
         private byte[] _boundaryBytes;
@@ -68,6 +68,43 @@ namespace MvcTest.Controllers
             new Regex(@"Content-Disposition:\s*form-data\s*;\s*name\s*=\s*""file""\s*;\s*filename\s*=\s*""(.*)""",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private readonly HttpWorkerRequest _workerRequest;
+
+        private object _lock = new object();
+        private int _recived = 0;
+        /// <summary>
+        /// In case that Received > 0 ;  Received / Total => real time uploading progress 
+        /// </summary>
+        public int Received
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    return _recived;
+                }
+            }
+            set
+            {
+                lock (_lock)
+                {
+                    _recived = value;
+                }
+            }
+        }
+
+        private int _total = 0;
+        public int Total
+        {
+            get
+            {
+                return _total;
+            }
+            set
+            {
+                _total = value;
+            }
+        }
+
 
         public UploadProcessor(HttpWorkerRequest workerRequest)
         {
@@ -92,9 +129,18 @@ namespace MvcTest.Controllers
                 preloaded = _workerRequest.ReadEntityBody(body, body.Length);
                 loaded = preloaded;
             }
-            var text = encoding.GetString(body);
+            
+            
+            ///TODO:need to make sure client sends the same encording content
+            ///TODO:var text = encoding.GetString(body);
+            var text = System.Text.Encoding.Default.GetString(body);
+
             var fileName = _filename.Matches(text)[0].Groups[1].Value;
-            fileName = Path.GetFileName(fileName); // IE captures full user path; chop it           
+            fileName = Path.GetFileName(fileName); // IE captures full user path; chop it 
+            if (!Directory.Exists(rootPath))
+            {
+                Directory.CreateDirectory(rootPath);
+            }
             var path = Path.Combine(rootPath, fileName);
             var files = new List<String> { fileName };
             var stream = new FileStream(path, FileMode.Create);
@@ -109,14 +155,14 @@ namespace MvcTest.Controllers
             field.SetValue(HttpContext.Current.Request, workerRequest);
             if (!_workerRequest.IsEntireEntityBodyIsPreloaded())
             {
-                var received = preloaded;
-                while (total - received >= loaded && _workerRequest.IsClientConnected())
+                Received = preloaded;
+                while (total - Received >= loaded && _workerRequest.IsClientConnected())
                 {
                     loaded = _workerRequest.ReadEntityBody(buffer, buffer.Length);
                     stream = ProcessHeaders(buffer, stream, encoding, loaded, files, rootPath);
-                    received += loaded;
+                    Received += loaded;
                 }
-                var remaining = total - received;
+                var remaining = total - Received;
                 buffer = new byte[remaining];
                 loaded = _workerRequest.ReadEntityBody(buffer, remaining);
                 stream = ProcessHeaders(buffer, stream, encoding, loaded, files, rootPath);
@@ -327,87 +373,87 @@ namespace MvcTest.Controllers
 
         public override void EndOfRequest()
         {
-            throw new NotImplementedException();
+            _request.EndOfRequest();
         }
 
         public override void FlushResponse(bool finalFlush)
         {
-            throw new NotImplementedException();
+            _request.FlushResponse(finalFlush);
         }
 
         public override string GetHttpVerbName()
         {
-            throw new NotImplementedException();
+            return _request.GetHttpVerbName();
         }
 
         public override string GetHttpVersion()
         {
-            throw new NotImplementedException();
+            return _request.GetHttpVersion();
         }
 
         public override string GetLocalAddress()
         {
-            throw new NotImplementedException();
+            return _request.GetLocalAddress();
         }
 
         public override int GetLocalPort()
         {
-            throw new NotImplementedException();
+            return _request.GetLocalPort();
         }
 
         public override string GetQueryString()
         {
-            throw new NotImplementedException();
+            return _request.GetQueryString();
         }
 
         public override string GetRawUrl()
         {
-            throw new NotImplementedException();
+            return _request.GetRawUrl();
         }
 
         public override string GetRemoteAddress()
         {
-            throw new NotImplementedException();
+            return _request.GetRemoteAddress();
         }
 
         public override int GetRemotePort()
         {
-            throw new NotImplementedException();
+            return _request.GetRemotePort();
         }
 
         public override string GetUriPath()
         {
-            throw new NotImplementedException();
+            return _request.GetUriPath();
         }
 
         public override void SendKnownResponseHeader(int index, string value)
         {
-            throw new NotImplementedException();
+            _request.SendKnownResponseHeader(index, value);
         }
 
         public override void SendResponseFromFile(IntPtr handle, long offset, long length)
         {
-            throw new NotImplementedException();
+            _request.SendResponseFromFile(handle, offset, length);
         }
 
         public override void SendResponseFromFile(string filename, long offset, long length)
         {
-            throw new NotImplementedException();
+            _request.SendResponseFromFile(filename, offset, length);
         }
 
         public override void SendResponseFromMemory(byte[] data, int length)
         {
-            throw new NotImplementedException();
+            _request.SendResponseFromMemory(data, length);
         }
 
         public override void SendStatus(int statusCode, string statusDescription)
         {
-            throw new NotImplementedException();
+            _request.SendStatus(statusCode, statusDescription);
         }
 
         public override void SendUnknownResponseHeader(string name, string value)
         {
-            throw new NotImplementedException();
+            _request.SendUnknownResponseHeader(name, value);
         }
     }
 }
