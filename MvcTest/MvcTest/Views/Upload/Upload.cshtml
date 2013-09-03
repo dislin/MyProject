@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "File Upload";
+}
+
+<h2>File List:</h2>
+
+@using (Html.BeginForm("Submit", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <text>文件1：</text><input name="file1" type="file" id="file1" />
+    <br />
+    <br />
+    <input type="submit" value="提交" />
+}

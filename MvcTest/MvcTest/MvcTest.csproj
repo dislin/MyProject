@@ -75,6 +75,7 @@
     <Compile Include="Controllers\TestDBController.cs" />
     <Compile Include="Controllers\TestDropDownController.cs" />
     <Compile Include="Controllers\TestMsmqController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +241,7 @@
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
     <Content Include="Views\TestDB\TestDB2.cshtml" />
+    <Content Include="Views\Upload\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\DataClasses1.dbml">
