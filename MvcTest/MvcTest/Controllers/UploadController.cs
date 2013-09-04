@@ -118,7 +118,7 @@ namespace MvcTest.Controllers
             {
                 return;
             }
-            var total = _workerRequest.GetTotalEntityBodyLength();
+            Total = _workerRequest.GetTotalEntityBodyLength();
             var preloaded = _workerRequest.GetPreloadedEntityBodyLength();
             var loaded = preloaded;
             SetByteMarkers(_workerRequest, encoding);
@@ -156,13 +156,13 @@ namespace MvcTest.Controllers
             if (!_workerRequest.IsEntireEntityBodyIsPreloaded())
             {
                 Received = preloaded;
-                while (total - Received >= loaded && _workerRequest.IsClientConnected())
+                while (Total - Received >= loaded && _workerRequest.IsClientConnected())
                 {
                     loaded = _workerRequest.ReadEntityBody(buffer, buffer.Length);
                     stream = ProcessHeaders(buffer, stream, encoding, loaded, files, rootPath);
                     Received += loaded;
                 }
-                var remaining = total - Received;
+                var remaining = Total - Received;
                 buffer = new byte[remaining];
                 loaded = _workerRequest.ReadEntityBody(buffer, remaining);
                 stream = ProcessHeaders(buffer, stream, encoding, loaded, files, rootPath);
