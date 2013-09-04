@@ -6,7 +6,7 @@ using System.Data;
 using System.Reflection;
 using CommandLib.Entity;
 using CommandLib.Object;
-using CommandLib.DB;
+//using CommandLib.DB;
 
 namespace CommandLib.Helper
 {
@@ -181,6 +181,7 @@ namespace CommandLib.Helper
 
         public static void InputToDB(object obj, string SPName) 
         {
+            /*
             DBSettingEntity dbSetting = new DBSettingEntity(DataProvider.SqlServer, DBSetting.GetDBConnection(DBSource.MainDBConstr), CommandType.StoredProcedure, DBSetting.GetSPValue(SPName), false);
             List<SPParameterEntity> sp = SPParameterObject.GetParameter(SPName);
             PropertyInfo[] ps = obj.GetType().GetProperties();
@@ -193,14 +194,17 @@ namespace CommandLib.Helper
                 }
             }
             DBManager2.Instance.ExecuteNonQuery(dbSetting);
+             */
         }
 
         public static bool ReturnDBInputStatus(object obj, string SPName)
         {
+            bool statusVal = false;
+            /*
             DBSettingEntity dbSetting = new DBSettingEntity(DataProvider.SqlServer, DBSetting.GetDBConnection(DBSource.MainDBConstr), CommandType.StoredProcedure, DBSetting.GetSPValue(SPName), false);
             List<SPParameterEntity> sp = SPParameterObject.GetParameter(SPName);
             PropertyInfo[] ps = obj.GetType().GetProperties();
-            bool statusVal = false;
+            
             foreach (PropertyInfo p in ps)
             {
                 string parametername = string.Empty;
@@ -224,6 +228,7 @@ namespace CommandLib.Helper
                 return true;
             };
             DBManager2.Instance.ExecuteReader(dbSetting,func);
+             */ 
             return statusVal;
         }
 
