@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB\Enity\DBSetting.cs" />
+    <Compile Include="DB\Service\DBService.cs" />
     <Compile Include="Entity\DBEntity.cs" />
     <Compile Include="Entity\PageEntity.cs" />
     <Compile Include="Entity\SPParameterEntity.cs" />
@@ -63,7 +65,9 @@
   <ItemGroup>
     <Content Include="log4net\log4net.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

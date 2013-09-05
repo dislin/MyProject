@@ -11,6 +11,8 @@ using MvcTest.App_Code.Common;
 using MvcTest.Models;
 using MvcTest.App_Code.Enum;
 using System.Data.Linq;
+using CommandLib.DB.Enity;
+using CommandLib.DB.Service;
 
 namespace MvcTest.Controllers
 {
@@ -60,10 +62,24 @@ namespace MvcTest.Controllers
             //oCmd.Dispose();
             //oSqlCn.Dispose(); 
             #endregion
+            DBSetting dbSetting = new DBSetting()
+            {
+                ConnectionKey = "MainDB",
+                StoredProcedure = "role_GetRoleDataByID"
+            };
+            DBService dbservice = new DBService();
+
+            SqlParameter param = new SqlParameter();
+            param.ParameterName = "@idnum";
+            param.SqlDbType = SqlDbType.Int;
+            param.Direction = ParameterDirection.Input;
+            param.Value = 1;
+
+            dbSetting.SqlParameterList.Add(param);
             Func<IDataReader, bool> fnDR = (IDataReader oDr) =>
             {
-                    while (oDr.Read())
-                    {
+                if (oDr.Read())
+                {
                         TestRole oRole = new TestRole()
                         {
                             idnum = oDr["idnum"].ToString().ToInt(),
@@ -72,41 +88,15 @@ namespace MvcTest.Controllers
                             status = (CommonEnum.RoleStatusEnum)oDr["status"].ToInt(),
                             isdelete = (CommonEnum.RoleDeleteEnum)oDr["isdelete"].ToInt()
                         };
-
                         oRoleList.Add(oRole);
-                    }
+                }
                     oDr.Close();
                     return true;
             };
-            GetListTestRole(fnDR);
+
+            dbservice.SqlExecuteReader(dbSetting, fnDR);
             return View(oRoleList);
         }
-
-        #region Internal function
-        internal void GetListTestRole(Func<IDataReader, bool> funcDRSetting)
-        {
-            ConfigHelper config = new ConfigHelper(ConfigEnum.Database, "MainDB");
-            SqlConnection oSqlCn = new SqlConnection();
-            oSqlCn.ConnectionString = config.GetValue();
-            SqlCommand oCmd = new SqlCommand("role_GetRoleDataByID", oSqlCn);
-
-            SqlParameter param = new SqlParameter();
-            param.ParameterName = "@idnum";
-            param.SqlDbType = SqlDbType.Int;
-            param.Direction = ParameterDirection.Input;
-            param.Value = 1;
-            oCmd.Parameters.Add(param);
-            oCmd.CommandType = CommandType.StoredProcedure;
-
-            oSqlCn.Open();
-            using (SqlDataReader oDr = oCmd.ExecuteReader(CommandBehavior.CloseConnection))
-            {
-                funcDRSetting.Invoke(oDr);
-            }
-            oCmd.Dispose();
-            oSqlCn.Dispose();
-        } 
-        #endregion
 
     }
 }
