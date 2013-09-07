@@ -40,8 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\Entity\ConfigSuper.cs" />
+    <Compile Include="Config\Entity\ConfigSetting.cs" />
+    <Compile Include="Config\Entity\DBConfig.cs" />
+    <Compile Include="Config\Entity\GeneralConfig.cs" />
+    <Compile Include="Config\Entity\IConfig.cs" />
+    <Compile Include="Config\Entity\LogSettingConfig.cs" />
+    <Compile Include="Config\Entity\SPConfig.cs" />
     <Compile Include="Config\Enum\ConfigEnum.cs" />
+    <Compile Include="Config\Service\ConfigService.cs" />
     <Compile Include="DB\Entity\DBSetting.cs" />
     <Compile Include="DB\Service\DBService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

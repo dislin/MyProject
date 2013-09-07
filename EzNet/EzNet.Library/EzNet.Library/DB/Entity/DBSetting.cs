@@ -12,6 +12,7 @@ namespace EzNet.Library.DB.Entity
             DBCommandType = CommandType.StoredProcedure;
         }
         public string ConnectionKey { set; get; }
+        public string ConnectionString { set; get; }
         public string StoredProcedure { set; get; }
         public List<SqlParameter> SqlParameterList { set; get; }
         public CommandType DBCommandType { set; get; }
