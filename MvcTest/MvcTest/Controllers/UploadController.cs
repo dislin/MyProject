@@ -130,10 +130,9 @@ namespace MvcTest.Controllers
                 loaded = preloaded;
             }
             
-            
-            ///TODO:need to make sure client sends the same encording content
-            ///TODO:var text = encoding.GetString(body);
-            var text = System.Text.Encoding.Default.GetString(body);
+            //need to make sure client sends the same encording content
+            var text = encoding.GetString(body);
+            //var text = System.Text.Encoding.Default.GetString(body);
 
             var fileName = _filename.Matches(text)[0].Groups[1].Value;
             fileName = Path.GetFileName(fileName); // IE captures full user path; chop it 
