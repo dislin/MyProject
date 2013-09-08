@@ -1,50 +1,20 @@
-﻿
+﻿@using MvcTest.Models;
+@model List<SystemCatalog>
 @{
     ViewBag.Title = "Home Page";
 }
     <div>
-        <div>
-        <h1>MSMQ Test</h1>
-            <ul>
-                <li><a href="../TestMsmq/testmsmq1" target="_blank">Receive Message1</a></li>
-                <li><a href="../TestMsmq/TestSendMsg1" target="_blank">Send Message1</a></li>
-            </ul>
-        </div>
-        <div>
-        <h1>DB Test</h1>
-            <ul>
-                <li><a href="../TestDB/testDB1" target="_blank">DB Test1</a></li>
-            </ul>
-        </div>
-        <div>
-        <h1>Config Test</h1>
-            <ul>
-                <li><a href="../TestConfig/LogConfigTest" target="_blank">Log Config Test</a></li>
-                <li><a href="../TestConfig/ObjectConfig" target="_blank">Object Config Test</a></li>
-            </ul>
-        </div>
-
-        <div>
-        <h1>DropDown Test</h1>
-            <ul>
-                <li><a href="../TestDropDown/TestDropDown" target="_blank">Dropdown Test</a></li>
-                <li><a href="../TestDropDown/TestDropDownJS" target="_blank">Dropdown Test for javascript</a></li>
-            </ul>
-        </div>
-
-        <div>
-        <h1>Exception Test</h1>
-            <ul>
-                <li><a href="../TestDropDown/TestException" target="_blank">Dropdown Exception</a></li>
-            </ul>
-        </div>
-
-        <div>
-        <h1>Upload Test</h1>
-            <ul>
-                <li><a href="../Upload" target="_blank">Upload</a></li>
-            </ul>
-        </div>
-
+        @{
+            if (Model.Count > 0)
+            {
+                <ul>
+                    @{
+                        foreach(SystemCatalog item in Model)
+                        {
+                            <li><a href="@item.Url" target="@item.Target">@item.Name</a></li>
+                        }
+                    }
+                </ul>
+            }
+        }
     </div>
-    
