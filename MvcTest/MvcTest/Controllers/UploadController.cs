@@ -14,6 +14,8 @@ using System.Reflection;
 using System.Collections;
 using EzNet.Library.Helpers;
 using EzNet.Library.Utilities;
+using EzNet.Library.Config.Entity;
+using EzNet.Library.Config.Service;
 
 namespace MvcTest.Controllers
 {
@@ -30,7 +32,12 @@ namespace MvcTest.Controllers
         // GET: /Upload/Submit
         public ActionResult Submit()
         {
-            var path = Server.MapPath("~/Uploads");
+            GeneralConfig config = new GeneralConfig("Upload.config");
+            ConfigSetting setting = new ConfigSetting(config);
+            List<UploadSettingEntity> entities = new ConfigService().GetObject(setting, new UploadSettingEntity());
+            UploadSettingEntity entity = entities.FirstOrDefault();
+            string rootPath = entity != null ? entity.RootPath : "\\Uploads";
+            var path = System.AppDomain.CurrentDomain.BaseDirectory + rootPath;
             var context = ControllerContext.HttpContext;
             var provider = (IServiceProvider)context;
             var workerRequest = (HttpWorkerRequest)provider.GetService(typeof(HttpWorkerRequest));
@@ -52,10 +59,30 @@ namespace MvcTest.Controllers
             
             var encoding = context.Request.ContentEncoding;
             var processor = new UploadProcessor(workerRequest);
+            processor.UploadFileFoundCallBackFunc = new UploadProcessor.UploadFileFoundCallBack(x =>
+            {
+                string newFile = x + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".EzNet";
+                if (System.IO.File.Exists(newFile))
+                {
+
+                }
+
+                ///TODO:记载DB，LOG等等
+
+                return newFile;
+            }
+            );
+
             processor.StreamToDisk(context, encoding, path);
+
             return View("UploadSuccess");
         }
 
+    }
+
+    internal class UploadSettingEntity
+    {
+        public string RootPath { get; set; }
     }
     
 }

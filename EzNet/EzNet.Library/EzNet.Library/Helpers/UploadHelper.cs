@@ -17,6 +17,16 @@ namespace EzNet.Library.Helpers
 
     public class UploadProcessor
     {
+        //在外部如有必要可自行重命名文件，重定位文件，将外部真实文件名与DB建立映射等等
+        public delegate string UploadFileFoundCallBack(string oriFileFullName);
+
+        public UploadFileFoundCallBack UploadFileFoundCallBackFunc
+        {
+            get;
+            set;
+        }
+
+
         private byte[] _buffer;
         private byte[] _boundaryBytes;
         private byte[] _endHeaderBytes;
@@ -68,6 +78,7 @@ namespace EzNet.Library.Helpers
         public UploadProcessor(HttpWorkerRequest workerRequest)
         {
             _workerRequest = workerRequest;
+            UploadFileFoundCallBackFunc = new UploadFileFoundCallBack(x=>x+".EzNet");
         }
 
         public void StreamToDisk(IServiceProvider provider, Encoding encoding, string rootPath)
@@ -101,7 +112,10 @@ namespace EzNet.Library.Helpers
             }
             var path = Path.Combine(rootPath, fileName);
             var files = new List<String> { fileName };
+
+            path = this.UploadFileFoundCallBackFunc.Invoke(path);
             var stream = new FileStream(path, FileMode.Create);
+            
             if (preloaded > 0)
             {
                 stream = ProcessHeaders(body, stream, encoding, preloaded, files, rootPath);
@@ -173,7 +187,7 @@ namespace EzNet.Library.Helpers
                         {
                             files.Add(fileName);
                             var filePath = Path.Combine(rootPath, fileName);
-                            stream = ProcessNextFile(stream, buffer, count, startIndex, endHeaderIndex, filePath);
+                            stream = ProcessNextFile(stream,this.UploadFileFoundCallBackFunc, buffer, count, startIndex, endHeaderIndex, filePath);
                         }
                         else
                         {
@@ -194,7 +208,7 @@ namespace EzNet.Library.Helpers
             return stream;
         }
 
-        private static FileStream ProcessNextFile(FileStream stream, byte[] buffer, int count, int startIndex, int endIndex, string filePath)
+        private static FileStream ProcessNextFile(FileStream stream, UploadFileFoundCallBack uploadFileFoundCallBackFunc, byte[] buffer, int count, int startIndex, int endIndex, string filePath)
         {
             var fullCount = count;
             var endOfFile = SkipInput(buffer, startIndex, count, ref count);
@@ -202,7 +216,10 @@ namespace EzNet.Library.Helpers
             stream.Flush();
             stream.Close();
             stream.Dispose();
+
+            filePath = uploadFileFoundCallBackFunc.Invoke(filePath);
             stream = new FileStream(filePath, FileMode.Create);
+            
             var startOfFile = SkipInput(buffer, 0, endIndex, ref fullCount);
             stream.Write(startOfFile, 0, fullCount);
             return stream;
