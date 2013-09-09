@@ -18,16 +18,16 @@ using EzNet.Library.Utilities;
 
 namespace MvcTest.Controllers
 {
-    public class TestConfigController : Controller
+    public class TestConfigController : BaseExceptionController
     {
         //
         // GET: /TestConfig/
 
         public ActionResult LogConfigTest()
         {
-            SimpleLogger.Fatal("log output by yanghang");
-            SimpleLogger.Debug("log output by yanghang");
-            SimpleLogger.Info("log output by yanghang");
+            m_logger.Fatal("log output by yanghang");
+            m_logger.Debug("log output by yanghang");
+            m_logger.Info("log output by yanghang");
 
             
             //ConfigHelper configLogSetting = new ConfigHelper(ConfigEnum.LogSetting, "Log4NetSetting");

@@ -17,7 +17,7 @@ namespace MvcTest.Controllers
         #region TestDropDown
         public ActionResult TestDropDown(TestDropDownModel model)
         {
-            SimpleLogger.Debug(model.intMemberID + " is selected");
+            m_logger.Debug(model.intMemberID + " is selected");
 
             List<TestMember> memberList = new List<TestMember>();
             memberList.Add(new TestMember("Leo", 1, 30, "Male"));

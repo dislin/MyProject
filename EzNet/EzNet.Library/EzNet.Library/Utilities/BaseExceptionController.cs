@@ -13,6 +13,8 @@ namespace EzNet.Library.Utilities
     public class BaseExceptionController : Controller
     {
 
+        protected SimpleLogger m_logger = SimpleLogger.GetInstance(); 
+
         /// <summary>
         /// Handle all exceptions with log output, etc.
         /// </summary>
@@ -25,7 +27,7 @@ namespace EzNet.Library.Utilities
             {
                 if (httpEx.GetHttpCode() != 401)
                 {
-                    SimpleLogger.Exception(httpEx);
+                    m_logger.Exception(httpEx);
                 }
                 else
                 {
@@ -35,7 +37,7 @@ namespace EzNet.Library.Utilities
             else
             {
                 System.Exception ex = filterContext.Exception;
-                SimpleLogger.Exception(ex); 
+                m_logger.Exception(ex); 
 
             }
 
