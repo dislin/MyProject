@@ -18,7 +18,7 @@ using EzNet.Library.Utilities;
 
 namespace MvcTest.Controllers
 {
-    public class TestConfigController : BaseExceptionController
+    public class TestConfigController : EzNetBaseExceptionController
     {
         //
         // GET: /TestConfig/

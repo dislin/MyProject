@@ -9,7 +9,7 @@ using EzNet.Library.Utilities;
 
 namespace MvcTest.Controllers
 {
-    public class TestDropDownController : BaseExceptionController
+    public class TestDropDownController : EzNetBaseExceptionController
     {
         //
         // GET: /TestDropDown/

@@ -7,12 +7,13 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using EzNet.Library.Utilities;
+using EzNet.Library.Config.Entity;
+using EzNet.Library.Config.Service;
 
 namespace EzNet.Library.Utilities
 {
-    public class BaseExceptionController : Controller
+    public class EzNetBaseExceptionController : Controller
     {
-
         protected SimpleLogger m_logger = SimpleLogger.GetInstance(); 
 
         /// <summary>
@@ -42,6 +43,25 @@ namespace EzNet.Library.Utilities
             }
 
             filterContext.ExceptionHandled = true; // Comment this line to see yellow screen with exception message
+
+            GeneralConfig exceptionConfig = new GeneralConfig("Exception.config");
+            ConfigSetting exceptionConfigSetting = new ConfigSetting(exceptionConfig);
+            List<ExceptionSettingEntity> entities = new ConfigService().GetObject(exceptionConfigSetting, new ExceptionSettingEntity());
+            ExceptionSettingEntity entity = entities.FirstOrDefault();
+            if (entity != null)
+            {
+                filterContext.Result = this.View(entity.ErrorView);
+            }
+            else
+            {
+                Response.Write("Sorry, an error occurred while processing your request.");
+            }
+            
         }
+    }
+
+    internal class ExceptionSettingEntity
+    {
+        public string ErrorView { get; set; }
     }
 }
