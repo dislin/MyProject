@@ -6,21 +6,40 @@ using System.Text;
 using System.IO;
 using System.Web;
 using log4net;
+using System.Runtime.CompilerServices;
 
 namespace EzNet.Library.Utilities
 {
     public class SimpleLogger
     {
-        private static log4net.ILog m_FatalLogger = LogManager.GetLogger("FatalLogger");
-        private static log4net.ILog m_DebugLogger=LogManager.GetLogger("DebugLogger");
-        private static log4net.ILog m_InfoLogger = LogManager.GetLogger("InfoLogger");
+        private static SimpleLogger m_instance = null;
+        
+        /// <summary>
+        /// [MethodImpl(MethodImplOptions.Synchronized)]
+        /// 表示此Method同一时间只可以被一个Thread呼叫
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static SimpleLogger GetInstance()
+        {
+            if (m_instance == null)
+            {
+                m_instance = new SimpleLogger();
+            }
 
-        public static void Init(FileInfo configFileInfo)
+            return m_instance;
+        }
+
+        private log4net.ILog m_FatalLogger = LogManager.GetLogger("FatalLogger");
+        private log4net.ILog m_DebugLogger=LogManager.GetLogger("DebugLogger");
+        private log4net.ILog m_InfoLogger = LogManager.GetLogger("InfoLogger");
+
+        public static void InitConfig(FileInfo configFileInfo)
         {   
             log4net.Config.XmlConfigurator.Configure(configFileInfo);
         }
 
-        public static void Exception(Exception ex)
+        public void Exception(Exception ex)
         {
             System.Web.HttpException httpEx = ex as HttpException;
             StringBuilder sb = new StringBuilder();
@@ -45,17 +64,17 @@ namespace EzNet.Library.Utilities
             m_FatalLogger.Fatal(sb.ToString());
         }
 
-        public static void Fatal(object message)
+        public void Fatal(object message)
         {
             m_FatalLogger.Fatal(message);
         }
 
-        public static void Debug(object message)
+        public void Debug(object message)
         {
             m_DebugLogger.Debug(message);
         }
 
-        public static void Info(object message)
+        public void Info(object message)
         {
             m_InfoLogger.Debug(message);
         }
