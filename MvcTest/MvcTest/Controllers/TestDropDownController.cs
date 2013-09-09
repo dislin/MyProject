@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTest.Models;
-using YangLogger;
-using CommandLib.Utilities;
+using EzNet.Library.Utilities;
+
 
 namespace MvcTest.Controllers
 {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using YangLogger;
 using System.Xml;
 using MvcTest.Models;
 using System.Reflection;
@@ -15,6 +14,7 @@ using EzNet.Library.Config.Service;
 using EzNet.Library.Config.Entity;
 using EzNet.Library.Config.Enum;
 using EzNet.Library.DB.Entity;
+using EzNet.Library.Utilities;
 
 namespace MvcTest.Controllers
 {
