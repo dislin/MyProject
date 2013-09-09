@@ -13,10 +13,10 @@ namespace MvcTest.Controllers
     {
         public ActionResult Index()
         {
-            GeneralConfig roleConfig = new GeneralConfig("SystemCatalog.config");
-            ConfigSetting roleConfigSetting = new ConfigSetting(roleConfig);
-            List<SystemCatalog> model = new ConfigService().GetObject(roleConfigSetting, new SystemCatalog());
-
+            //GeneralConfig roleConfig = new GeneralConfig("SystemCatalog.config");
+            //ConfigSetting roleConfigSetting = new ConfigSetting(roleConfig);
+            //List<SystemCatalog> model = new ConfigService().GetObject(roleConfigSetting, new SystemCatalog());
+            List<SystemCatalog> model = new List<SystemCatalog>();
             return View(model);
         }
 
