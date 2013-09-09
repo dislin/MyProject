@@ -2,3 +2,5 @@ D:\workplace\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\EzNet.Library
 D:\workplace\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\EzNet.Library.pdb
 D:\workplace\MyProject\EzNet\EzNet.Library\EzNet.Library\obj\Debug\EzNet.Library.dll
 D:\workplace\MyProject\EzNet\EzNet.Library\EzNet.Library\obj\Debug\EzNet.Library.pdb
+D:\workplace\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\log4net.dll
+D:\workplace\MyProject\EzNet\EzNet.Library\EzNet.Library\obj\Debug\EzNet.Library.csprojResolveAssemblyReference.cache
