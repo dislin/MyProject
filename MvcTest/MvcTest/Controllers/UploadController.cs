@@ -32,12 +32,6 @@ namespace MvcTest.Controllers
         // GET: /Upload/Submit
         public ActionResult Submit()
         {
-            GeneralConfig config = new GeneralConfig("Upload.config");
-            ConfigSetting setting = new ConfigSetting(config);
-            List<UploadSettingEntity> entities = ConfigService.Instance().GetObject(setting, new UploadSettingEntity());
-            UploadSettingEntity entity = entities.FirstOrDefault();
-            string rootPath = entity != null ? entity.RootPath : "\\Uploads";
-            var path = System.AppDomain.CurrentDomain.BaseDirectory + rootPath;
             var context = ControllerContext.HttpContext;
             var provider = (IServiceProvider)context;
             var workerRequest = (HttpWorkerRequest)provider.GetService(typeof(HttpWorkerRequest));
@@ -73,16 +67,11 @@ namespace MvcTest.Controllers
             }
             );
 
-            processor.StreamToDisk(context, encoding, path);
+            processor.StreamToDisk(context, encoding);
 
             return View("UploadSuccess");
         }
 
-    }
-
-    internal class UploadSettingEntity
-    {
-        public string RootPath { get; set; }
     }
     
 }

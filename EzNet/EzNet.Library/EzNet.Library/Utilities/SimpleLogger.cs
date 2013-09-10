@@ -20,7 +20,7 @@ namespace EzNet.Library.Utilities
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static SimpleLogger GetInstance()
+        public static SimpleLogger Instance()
         {
             if (m_instance == null)
             {

@@ -14,7 +14,7 @@ namespace EzNet.Library.Utilities
 {
     public class EzNetBaseExceptionController : Controller
     {
-        protected SimpleLogger m_logger = SimpleLogger.GetInstance(); 
+        protected SimpleLogger m_logger = SimpleLogger.Instance(); 
 
         /// <summary>
         /// Handle all exceptions with log output, etc.
@@ -60,7 +60,7 @@ namespace EzNet.Library.Utilities
         }
     }
 
-    internal class ExceptionSettingEntity
+    public class ExceptionSettingEntity
     {
         public string ErrorView { get; set; }
     }

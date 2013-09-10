@@ -11,6 +11,8 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Collections;
+using EzNet.Library.Config.Entity;
+using EzNet.Library.Config.Service;
 
 namespace EzNet.Library.Helpers
 {
@@ -26,6 +28,7 @@ namespace EzNet.Library.Helpers
             set;
         }
 
+        private string m_rootPath;
 
         private byte[] _buffer;
         private byte[] _boundaryBytes;
@@ -78,11 +81,30 @@ namespace EzNet.Library.Helpers
         public UploadProcessor(HttpWorkerRequest workerRequest)
         {
             _workerRequest = workerRequest;
+
+            GeneralConfig config = new GeneralConfig("Upload.config");
+            ConfigSetting setting = new ConfigSetting(config);
+            List<UploadSettingEntity> entities = ConfigService.Instance().GetObject(setting, new UploadSettingEntity());
+            UploadSettingEntity entity = entities.FirstOrDefault();
+            string rootPath = entity != null ? entity.RootPath : "\\Uploads";
+            m_rootPath = System.AppDomain.CurrentDomain.BaseDirectory + rootPath;
+
             UploadFileFoundCallBackFunc = new UploadFileFoundCallBack(x=>x+".EzNet");
         }
 
-        public void StreamToDisk(IServiceProvider provider, Encoding encoding, string rootPath)
+        public UploadProcessor(HttpWorkerRequest workerRequest,UploadSettingEntity settingEntity)
         {
+            _workerRequest = workerRequest;
+            UploadFileFoundCallBackFunc = new UploadFileFoundCallBack(x => x + ".EzNet");
+        }
+
+        public void StreamToDisk(IServiceProvider provider, Encoding encoding, string rootPath = null)
+        {
+            if (rootPath == null)
+            {
+                rootPath = m_rootPath;
+            }
+
             var buffer = new byte[8192];
             if (!_workerRequest.HasEntityBody())
             {
@@ -430,5 +452,17 @@ namespace EzNet.Library.Helpers
         {
             _request.SendUnknownResponseHeader(name, value);
         }
+    }
+
+    public class UploadSettingEntity
+    {
+        public string RootPath { get; set; }
+        public class UploadFileSecurityEntity
+        {
+            public string Owner { get; set; }
+            public bool FileNameEncrypt { get; set; }
+            public bool FileContentEncrypt { get; set; }
+        }
+        public UploadFileSecurityEntity UploadFileSecurity { get; set; }
     }
 }
