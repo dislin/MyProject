@@ -1,38 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Xml;
 using EzNet.Library.Config.Entity;
-using System.Collections;
-using System.Runtime.CompilerServices;
+using EzNet.Library.Common;
 
 namespace EzNet.Library.Config.Service
 {
-    public class ConfigService
+    public class ConfigService : Singleton <ConfigService>
     {
-        private static ConfigService instance = null;
-        private static readonly object locker = new object();
-
         private ConfigService() { }
-
-        public static ConfigService Instance()
-        {
-            if (instance == null)
-            {
-                lock (locker)
-                {
-                    if (instance == null)
-                    {
-                        instance = new ConfigService();
-                    }
-                }
-            }
-
-            return instance;
-        }
-
         public List<T> GetObject<T>(ConfigSetting configSetting, T entity)
             where T:new()
         {

@@ -84,7 +84,7 @@ namespace EzNet.Library.Helpers
 
             GeneralConfig config = new GeneralConfig("Upload.config");
             ConfigSetting setting = new ConfigSetting(config);
-            List<UploadSettingEntity> entities = ConfigService.Instance().GetObject(setting, new UploadSettingEntity());
+            List<UploadSettingEntity> entities = ConfigService.Instance.GetObject(setting, new UploadSettingEntity());
             UploadSettingEntity entity = entities.FirstOrDefault();
             string rootPath = entity != null ? entity.RootPath : "\\Uploads";
             m_rootPath = System.AppDomain.CurrentDomain.BaseDirectory + rootPath;

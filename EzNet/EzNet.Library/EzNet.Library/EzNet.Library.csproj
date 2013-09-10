@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Singleton.cs" />
     <Compile Include="Config\Entity\ConfigSetting.cs" />
     <Compile Include="Config\Entity\DBConfig.cs" />
     <Compile Include="Config\Entity\GeneralConfig.cs" />

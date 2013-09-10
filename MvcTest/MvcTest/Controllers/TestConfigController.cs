@@ -82,7 +82,7 @@ namespace MvcTest.Controllers
             #endregion
 
             ConfigSetting dbconfig = new ConfigSetting(ConfigEnum.ConfigType.Database);
-            List<DBSetting> db = ConfigService.Instance().GetObject(dbconfig, new DBSetting());
+            List<DBSetting> db = ConfigService.Instance.GetObject(dbconfig, new DBSetting());
             db.ForEach(x =>
             {
                 ViewBag.content += x.ConnectionKey + ": " + x.ConnectionString +",";
@@ -90,7 +90,7 @@ namespace MvcTest.Controllers
 
             GeneralConfig roleConfig = new GeneralConfig("TestRole.config");
             ConfigSetting roleConfigSetting = new ConfigSetting(roleConfig);
-            List<TestRole> roles = ConfigService.Instance().GetObject(roleConfigSetting, new TestRole());
+            List<TestRole> roles = ConfigService.Instance.GetObject(roleConfigSetting, new TestRole());
             roles.ForEach(x =>
             {
                 ViewBag.rolesContent += x.idnum + "," + x.name + ";";
