@@ -91,8 +91,8 @@ namespace EzNet.Library.Config.Service
                             else
                             {
                                 //Object
-                                //obj = GetObject(oNode.FirstChild, obj);
-                                obj = GetObject(oNode, obj);
+                                obj = GetObject(oNode.FirstChild, obj);
+                                //obj = GetObject(oNode, obj);
                                 oInfo.SetValue(oNewEntity, Convert.ChangeType(obj, oInfo.PropertyType), null);
                             }
                         }
