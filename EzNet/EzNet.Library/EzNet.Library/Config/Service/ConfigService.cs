@@ -6,24 +6,37 @@ using System.Reflection;
 using System.Xml;
 using EzNet.Library.Config.Entity;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace EzNet.Library.Config.Service
 {
     public class ConfigService
     {
+        private static ConfigService instance = null;
+        private static readonly object locker = new object();
+
+        private ConfigService() { }
+
+        public static ConfigService Instance()
+        {
+            if (instance == null)
+            {
+                lock (locker)
+                {
+                    if (instance == null)
+                    {
+                        instance = new ConfigService();
+                    }
+                }
+            }
+
+            return instance;
+        }
+
         public List<T> GetObject<T>(ConfigSetting configSetting, T entity)
             where T:new()
         {
             List<T> objectList = new List<T>();
-            PropertyInfo[] oProperties = entity.GetType().GetProperties();
-
-            var oPropertyObjects = from pi in oProperties
-                       select new
-                       {
-                           name = pi.Name,
-                           type = pi.PropertyType
-                       };
-
             string txtFilePath = configSetting.FilePath + configSetting.FileName;
             XmlDocument doc = new XmlDocument();
 

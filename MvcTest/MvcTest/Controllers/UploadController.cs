@@ -34,7 +34,7 @@ namespace MvcTest.Controllers
         {
             GeneralConfig config = new GeneralConfig("Upload.config");
             ConfigSetting setting = new ConfigSetting(config);
-            List<UploadSettingEntity> entities = new ConfigService().GetObject(setting, new UploadSettingEntity());
+            List<UploadSettingEntity> entities = ConfigService.Instance().GetObject(setting, new UploadSettingEntity());
             UploadSettingEntity entity = entities.FirstOrDefault();
             string rootPath = entity != null ? entity.RootPath : "\\Uploads";
             var path = System.AppDomain.CurrentDomain.BaseDirectory + rootPath;

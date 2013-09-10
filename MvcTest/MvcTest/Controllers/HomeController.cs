@@ -15,7 +15,7 @@ namespace MvcTest.Controllers
         {
             GeneralConfig roleConfig = new GeneralConfig("SystemCatalog.config");
             ConfigSetting roleConfigSetting = new ConfigSetting(roleConfig);
-            List<SystemCatalog> model = new ConfigService().GetObject(roleConfigSetting, new SystemCatalog());
+            List<SystemCatalog> model = ConfigService.Instance().GetObject(roleConfigSetting, new SystemCatalog());
             return View(model);
         }
 

@@ -46,7 +46,7 @@ namespace EzNet.Library.Utilities
 
             GeneralConfig exceptionConfig = new GeneralConfig("Exception.config");
             ConfigSetting exceptionConfigSetting = new ConfigSetting(exceptionConfig);
-            List<ExceptionSettingEntity> entities = new ConfigService().GetObject(exceptionConfigSetting, new ExceptionSettingEntity());
+            List<ExceptionSettingEntity> entities = ConfigService.Instance().GetObject(exceptionConfigSetting, new ExceptionSettingEntity());
             ExceptionSettingEntity entity = entities.FirstOrDefault();
             if (entity != null)
             {
