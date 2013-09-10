@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.Xml;
 using EzNet.Library.Config.Entity;
+using System.Collections;
 
 namespace EzNet.Library.Config.Service
 {
@@ -33,29 +34,6 @@ namespace EzNet.Library.Config.Service
 
             XmlNodeList oRootsNodes = doc.SelectSingleNode(configSetting.NodePath).ChildNodes;
 
-            #region Old
-            //foreach (XmlNode oNodes in oRootsNodes)
-            //{
-            //    T oNewEntity = new T();
-            //    foreach (XmlNode oNode in oNodes.ChildNodes)
-            //    {
-            //        if (oPropertyObjects.Select(x => x.name.ToString()).ToList().Contains(oNode.Name))
-            //        {
-            //            PropertyInfo oInfo = entity.GetType().GetProperty(oNode.Name);
-            //            if (!oInfo.PropertyType.IsEnum)
-            //            {
-            //                oInfo.SetValue(oNewEntity, Convert.ChangeType(oNode.InnerText, oInfo.PropertyType), null);
-            //            }
-            //            else
-            //            {
-            //                oInfo.SetValue(oNewEntity, Convert.ToInt16(oNode.InnerText), null);
-            //            }
-            //        }
-            //    }
-            //    objectList.Add(oNewEntity);
-            //} 
-            #endregion
-
             object obj = new object();
             obj = (T)Convert.ChangeType(entity, typeof(T));
             List<object> objs = BuildObject(oRootsNodes, obj);
@@ -69,7 +47,22 @@ namespace EzNet.Library.Config.Service
 
         internal List<object> BuildObject(XmlNodeList nodes, object entity)
         {
-            PropertyInfo[] oProperties = entity.GetType().GetProperties();
+            Type oEntityType = entity.GetType();
+            Type oRealType;
+
+            if (Array.IndexOf(oEntityType.GetInterfaces(), typeof(System.Collections.IEnumerable)) > -1)
+            {
+                //List Object
+                oRealType = oEntityType.GetGenericArguments()[0];
+            }
+            else
+            {
+                //Object
+                oRealType = oEntityType;
+            }
+            PropertyInfo[] oProperties = oRealType.GetProperties();
+
+            
             List<object> entityList = new List<object>();
             var oPropertyObjects = from pi in oProperties
                                    select new
@@ -80,23 +73,33 @@ namespace EzNet.Library.Config.Service
 
             foreach (XmlNode oNodes in nodes)
             {
-                object oNewEntity = Activator.CreateInstance(entity.GetType());
+                object oNewEntity = Activator.CreateInstance(oRealType);
                 foreach (XmlNode oNode in oNodes.ChildNodes)
                 {
                     if (oPropertyObjects.Select(x => x.name.ToString()).ToList().Contains(oNode.Name))
                     {
-                        PropertyInfo oInfo = entity.GetType().GetProperty(oNode.Name);
+                        PropertyInfo oInfo = oNewEntity.GetType().GetProperty(oNode.Name);
                         if (oNode.FirstChild.HasChildNodes)
                         {
-                            //if (Array.IndexOf(type.GetInterfaces(), typeof(IEnumerable)) > -1)
-                            //{
-                            //    IEnumerable en = o as IEnumerable;
-                            //    foreach (object obj in en)
-                            //        Console.WriteLine(obj);
-                            //}
                             object obj = Activator.CreateInstance(oInfo.PropertyType);
-                            List<object> objs = BuildObject(oNode.FirstChild.ChildNodes, obj);
-                            oInfo.SetValue(oNewEntity, Convert.ChangeType(objs, oInfo.PropertyType), null);
+                            if (Array.IndexOf(oInfo.PropertyType.GetInterfaces(), typeof(System.Collections.IEnumerable)) > -1)
+                            {
+                                //List Object
+                                IList oIList = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(oInfo.PropertyType.GetGenericArguments()[0]));
+                                var oObjs = BuildObject(oNode.ChildNodes, obj);
+                                oObjs.ForEach(x =>
+                                {
+                                    oIList.Add(Convert.ChangeType(x, oInfo.PropertyType.GetGenericArguments()[0]));
+                                });
+
+                                oInfo.SetValue(oNewEntity, oIList, null);
+                            }
+                            else
+                            {
+                                //Object
+                                obj = GetObject(oNode.FirstChild, obj);
+                                oInfo.SetValue(oNewEntity, Convert.ChangeType(obj, oInfo.PropertyType), null);
+                            }
                         }
                         else
                         {
@@ -115,6 +118,36 @@ namespace EzNet.Library.Config.Service
             }
 
             return entityList;
+        }
+
+        internal object GetObject(XmlNode oNode, object oEntity)
+        {
+            PropertyInfo[] oProperties = oEntity.GetType().GetProperties();
+            var oPropertyObjects = from pi in oProperties
+                                   select new
+                                   {
+                                       name = pi.Name,
+                                       type = pi.PropertyType
+                                   };
+
+                object oObject = Activator.CreateInstance(oEntity.GetType());
+                foreach (XmlNode oPropertyNode in oNode)
+                {
+                    if (oPropertyObjects.Select(x => x.name.ToString()).ToList().Contains(oPropertyNode.Name))
+                    {
+                        PropertyInfo oInfo = oObject.GetType().GetProperty(oPropertyNode.Name);
+                        if (!oInfo.PropertyType.IsEnum)
+                        {
+                            oInfo.SetValue(oObject, Convert.ChangeType(oPropertyNode.InnerText, oInfo.PropertyType), null);
+                        }
+                        else
+                        {
+                            oInfo.SetValue(oObject, Convert.ToInt16(oPropertyNode.InnerText), null);
+                        }
+                    }
+                }
+                return oObject;
+
         }
 
     }

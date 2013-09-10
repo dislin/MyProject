@@ -7,7 +7,6 @@
         @{
             if (Model.Count > 0)
             {
-                    @{
                         foreach(SystemCatalog group in Model)
                         {
                             <h2>@group.GroupName</h2>
@@ -17,20 +16,6 @@
                             </ul>
                             }
                         }
-                    }
             }
         }
     </div>
-    @{Type type = Model.GetType().GetGenericArguments()[0];
-        @type.ToString();
-        string txt = "";
-        if (Array.IndexOf(type.GetInterfaces(), typeof(System.Collections.IEnumerable)) > -1)
-        {
-            txt = "yes";
-        }
-        else
-        {
-            txt = "no";
-        }
-      }
-      @txt
