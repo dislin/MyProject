@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTest.Models;
-using YangLogger;
-using CommandLib.Utilities;
+using EzNet.Library.Utilities;
+
 
 namespace MvcTest.Controllers
 {
-    public class TestDropDownController : BaseExceptionController
+    public class TestDropDownController : EzNetBaseExceptionController
     {
         //
         // GET: /TestDropDown/
@@ -17,7 +17,7 @@ namespace MvcTest.Controllers
         #region TestDropDown
         public ActionResult TestDropDown(TestDropDownModel model)
         {
-            SimpleLogger.Debug(model.intMemberID + " is selected");
+            m_logger.Debug(model.intMemberID + " is selected");
 
             List<TestMember> memberList = new List<TestMember>();
             memberList.Add(new TestMember("Leo", 1, 30, "Male"));

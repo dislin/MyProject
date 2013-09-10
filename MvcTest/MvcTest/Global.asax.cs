@@ -35,7 +35,7 @@ namespace MvcTest
             string configFileName = AppDomain.CurrentDomain.BaseDirectory;
             configFileName += (@"Configuration\LogSetting.config");
             System.IO.FileInfo configFileInfo = new System.IO.FileInfo(configFileName);
-            YangLogger.SimpleLogger.Init(configFileInfo);
+            EzNet.Library.Utilities.SimpleLogger.InitConfig(configFileInfo);
 
 
             AreaRegistration.RegisterAllAreas();

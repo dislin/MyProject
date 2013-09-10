@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using YangLogger;
 using System.Xml;
 using MvcTest.Models;
 using System.Reflection;
@@ -15,19 +14,20 @@ using EzNet.Library.Config.Service;
 using EzNet.Library.Config.Entity;
 using EzNet.Library.Config.Enum;
 using EzNet.Library.DB.Entity;
+using EzNet.Library.Utilities;
 
 namespace MvcTest.Controllers
 {
-    public class TestConfigController : Controller
+    public class TestConfigController : EzNetBaseExceptionController
     {
         //
         // GET: /TestConfig/
 
         public ActionResult LogConfigTest()
         {
-            SimpleLogger.Fatal("log output by yanghang");
-            SimpleLogger.Debug("log output by yanghang");
-            SimpleLogger.Info("log output by yanghang");
+            m_logger.Fatal("log output by yanghang");
+            m_logger.Debug("log output by yanghang");
+            m_logger.Info("log output by yanghang");
 
             
             //ConfigHelper configLogSetting = new ConfigHelper(ConfigEnum.LogSetting, "Log4NetSetting");
