@@ -56,6 +56,7 @@
     <Compile Include="Config\Service\ConfigService.cs" />
     <Compile Include="DB\Entity\DBSetting.cs" />
     <Compile Include="DB\Service\DBService.cs" />
+    <Compile Include="Helpers\CryptHelper.cs" />
     <Compile Include="Helpers\UploadHelper.cs" />
     <Compile Include="Utilities\SimpleLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

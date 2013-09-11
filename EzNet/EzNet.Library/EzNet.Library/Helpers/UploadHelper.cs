@@ -28,7 +28,10 @@ namespace EzNet.Library.Helpers
             set;
         }
 
-        private string m_rootPath;
+        private UploadSettingEntity m_settingEntity;
+
+        /// TODO:以后把密码传进来
+        private byte[] m_password=Encoding.ASCII.GetBytes("yanghang");
 
         private byte[] _buffer;
         private byte[] _boundaryBytes;
@@ -46,7 +49,7 @@ namespace EzNet.Library.Helpers
         /// <summary>
         /// In case that Received > 0 ;  Received / Total => real time uploading progress 
         /// </summary>
-        public int Received
+        public int ReceivedSize
         {
             get
             {
@@ -65,7 +68,7 @@ namespace EzNet.Library.Helpers
         }
 
         private int _total = 0;
-        public int Total
+        public int TotalSize
         {
             get
             {
@@ -85,9 +88,8 @@ namespace EzNet.Library.Helpers
             GeneralConfig config = new GeneralConfig("Upload.config");
             ConfigSetting setting = new ConfigSetting(config);
             List<UploadSettingEntity> entities = ConfigService.Instance.GetObject(setting, new UploadSettingEntity());
-            UploadSettingEntity entity = entities.FirstOrDefault();
-            string rootPath = entity != null ? entity.RootPath : "\\Uploads";
-            m_rootPath = System.AppDomain.CurrentDomain.BaseDirectory + rootPath;
+            m_settingEntity = entities.FirstOrDefault();
+            m_settingEntity.RootPath = System.AppDomain.CurrentDomain.BaseDirectory + m_settingEntity.RootPath;
 
             UploadFileFoundCallBackFunc = new UploadFileFoundCallBack(x=>x+".EzNet");
         }
@@ -95,22 +97,19 @@ namespace EzNet.Library.Helpers
         public UploadProcessor(HttpWorkerRequest workerRequest,UploadSettingEntity settingEntity)
         {
             _workerRequest = workerRequest;
+            m_settingEntity = settingEntity;
             UploadFileFoundCallBackFunc = new UploadFileFoundCallBack(x => x + ".EzNet");
         }
 
-        public void StreamToDisk(IServiceProvider provider, Encoding encoding, string rootPath = null)
+        public void StreamToDisk(IServiceProvider provider, Encoding encoding)
         {
-            if (rootPath == null)
-            {
-                rootPath = m_rootPath;
-            }
-
+            string rootPath = m_settingEntity.RootPath;
             var buffer = new byte[8192];
             if (!_workerRequest.HasEntityBody())
             {
                 return;
             }
-            Total = _workerRequest.GetTotalEntityBodyLength();
+            TotalSize = _workerRequest.GetTotalEntityBodyLength();
             var preloaded = _workerRequest.GetPreloadedEntityBodyLength();
             var loaded = preloaded;
             SetByteMarkers(_workerRequest, encoding);
@@ -136,7 +135,7 @@ namespace EzNet.Library.Helpers
             var files = new List<String> { fileName };
 
             path = this.UploadFileFoundCallBackFunc.Invoke(path);
-            var stream = new FileStream(path, FileMode.Create);
+            EzNetEnCryptFileStream stream = new EzNetEnCryptFileStream(path, m_password, m_settingEntity.UploadFileSecurity.FileContentEncrypt);
             
             if (preloaded > 0)
             {
@@ -149,14 +148,14 @@ namespace EzNet.Library.Helpers
             field.SetValue(HttpContext.Current.Request, workerRequest);
             if (!_workerRequest.IsEntireEntityBodyIsPreloaded())
             {
-                Received = preloaded;
-                while (Total - Received >= loaded && _workerRequest.IsClientConnected())
+                ReceivedSize = preloaded;
+                while (TotalSize - ReceivedSize >= loaded && _workerRequest.IsClientConnected())
                 {
                     loaded = _workerRequest.ReadEntityBody(buffer, buffer.Length);
                     stream = ProcessHeaders(buffer, stream, encoding, loaded, files, rootPath);
-                    Received += loaded;
+                    ReceivedSize += loaded;
                 }
-                var remaining = Total - Received;
+                var remaining = TotalSize - ReceivedSize;
                 buffer = new byte[remaining];
                 loaded = _workerRequest.ReadEntityBody(buffer, remaining);
                 stream = ProcessHeaders(buffer, stream, encoding, loaded, files, rootPath);
@@ -177,7 +176,7 @@ namespace EzNet.Library.Helpers
             _lineBreakBytes = encoding.GetBytes(string.Concat(_lineBreak + boundary + _lineBreak));
         }
 
-        private FileStream ProcessHeaders(byte[] buffer, FileStream stream, Encoding encoding, int count, ICollection<string> files, string rootPath)
+        private EzNetEnCryptFileStream ProcessHeaders(byte[] buffer, EzNetEnCryptFileStream stream, Encoding encoding, int count, ICollection<string> files, string rootPath)
         {
             buffer = AppendBuffer(buffer, count);
             var startIndex = IndexOf(buffer, _boundaryBytes, 0);
@@ -230,7 +229,7 @@ namespace EzNet.Library.Helpers
             return stream;
         }
 
-        private static FileStream ProcessNextFile(FileStream stream, UploadFileFoundCallBack uploadFileFoundCallBackFunc, byte[] buffer, int count, int startIndex, int endIndex, string filePath)
+        private static EzNetEnCryptFileStream ProcessNextFile(EzNetEnCryptFileStream stream, UploadFileFoundCallBack uploadFileFoundCallBackFunc, byte[] buffer, int count, int startIndex, int endIndex, string filePath)
         {
             var fullCount = count;
             var endOfFile = SkipInput(buffer, startIndex, count, ref count);
@@ -240,7 +239,7 @@ namespace EzNet.Library.Helpers
             stream.Dispose();
 
             filePath = uploadFileFoundCallBackFunc.Invoke(filePath);
-            stream = new FileStream(filePath, FileMode.Create);
+            stream = new EzNetEnCryptFileStream(filePath, stream.Password, stream.IsCrypt);
             
             var startOfFile = SkipInput(buffer, 0, endIndex, ref fullCount);
             stream.Write(startOfFile, 0, fullCount);
