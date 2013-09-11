@@ -14,7 +14,7 @@ namespace EzNet.Library.Helpers
         private FileStream m_fileStream;
 
         public string Path { get; set; }
-        public byte[] Password{get;set;}
+        public byte[] Password { get; set; }
         public bool IsCrypt { get; set; }
 
         public EzNetEnCryptFileStream(string path, byte[] password, bool needCrypt)
@@ -45,7 +45,6 @@ namespace EzNet.Library.Helpers
                 m_hashStream = new CryptoStream(Stream.Null, m_hasher, CryptoStreamMode.Write);
 
                 BinaryWriter bw = new BinaryWriter(m_outCryptStream);
-                //bw.Write((long)0);
                 bw.Write(FC_TAG);
             }
 
@@ -90,18 +89,8 @@ namespace EzNet.Library.Helpers
                 // 输入文件写入散列
                 m_outCryptStream.Write(hash, 0, hash.Length);
 
-                //克服有时会出现的解密后数据长度出错的问题
-                //写入8个字节任意值占位（文件长度为long类型，占8个字节）
-                byte[] stubCode = new byte[sizeof(long)];
-                m_outCryptStream.Write(stubCode, 0, sizeof(long));
-
                 // 关闭文件流
                 m_outCryptStream.FlushFinalBlock();
-
-                ///明文写入文件长度
-                BinaryWriter bw2 = new BinaryWriter(m_fileStream);
-                bw2.Write(m_fileSize);
-                bw2.Flush();
 
                 m_outCryptStream.Close();
             }
@@ -222,23 +211,13 @@ namespace EzNet.Library.Helpers
         public static void DecryptFile(string inFile, string outFile, byte[] password)
         {
             // 创建打开文件流
-            using (FileStream fin = File.OpenRead(inFile),
+            using (FileStream fin = File.OpenRead(inFile), fin2 = File.OpenRead(inFile),
                 fout = File.OpenWrite(outFile))
             {
                 int size = (int)fin.Length;
                 byte[] bytes = new byte[BUFFER_SIZE];
-                int read = -1;
-                int value = 0;
                 int outValue = 0;
-
-
-                //读取明文文件长度
-                int fileSizeOffset = 0 - sizeof(long);
-                fin.Seek(fileSizeOffset, SeekOrigin.End);
-                BinaryReader br = new BinaryReader(fin);
-                long lSize = br.ReadInt64();
-                fin.Seek(0, SeekOrigin.Begin);
-
+                int read = -1;
 
                 byte[] IV = new byte[16];
                 fin.Read(IV, 0, 16);
@@ -249,33 +228,57 @@ namespace EzNet.Library.Helpers
                 SymmetricAlgorithm sma = CreateRijndael(password, salt);
                 sma.IV = IV;
 
-                value = 32;
+                //value = 32;
 
 
-                // 创建散列对象, 校验文件
-                HashAlgorithm hasher = SHA256.Create();
-
-                using (CryptoStream cin = new CryptoStream(fin, sma.CreateDecryptor(), CryptoStreamMode.Read),
-                    chash = new CryptoStream(Stream.Null, hasher, CryptoStreamMode.Write))
+                //探测文件长度
+                //sha256 HASH固定长度256 bits
+                HashAlgorithm sha256Hasher = SHA256.Create();
+                try
                 {
+                    using (CryptoStream cin = new CryptoStream(fin, sma.CreateDecryptor(), CryptoStreamMode.Read))
+                    {
+                        BinaryReader br2 = new BinaryReader(cin);
+                        //lSize = br.ReadInt64();
+                        ulong tag = br2.ReadUInt64();
+
+                        if (FC_TAG != tag)
+                            throw new ApplicationException("密钥不对或文件被破坏");
+
+                        while (cin.ReadByte() >= 0)
+                        {
+                            ++outValue;
+                        }
+                    }
+                }
+                catch (CryptographicException ex)
+                {
+                }
+
+                long fileSize = outValue - 256 / 8;
+
+                //解密文件
+                HashAlgorithm sha256Hasher2 = SHA256.Create();
+                using (CryptoStream cin = new CryptoStream(fin2, sma.CreateDecryptor(), CryptoStreamMode.Read),
+                    chash = new CryptoStream(Stream.Null, sha256Hasher2, CryptoStreamMode.Write))
+                {
+
+                    fin2.Read(IV, 0, 16);
+                    fin2.Read(salt, 0, 16);
 
                     BinaryReader br2 = new BinaryReader(cin);
                     //lSize = br.ReadInt64();
-                    ulong tag = br2.ReadUInt64();
+                    br2.ReadUInt64();
 
-                    if (FC_TAG != tag)
-                        throw new ApplicationException("文件被破坏");
 
-                    long numReads = lSize / BUFFER_SIZE;
-                    long slack = (long)lSize % BUFFER_SIZE;
+                    long numReads = fileSize / BUFFER_SIZE;
+                    long slack = (long)fileSize % BUFFER_SIZE;
 
                     for (int i = 0; i < numReads; ++i)
                     {
                         read = cin.Read(bytes, 0, bytes.Length);
                         fout.Write(bytes, 0, read);
                         chash.Write(bytes, 0, read);
-                        value += read;
-                        outValue += read;
                     }
 
                     if (slack > 0)
@@ -283,8 +286,6 @@ namespace EzNet.Library.Helpers
                         read = cin.Read(bytes, 0, (int)slack);
                         fout.Write(bytes, 0, read);
                         chash.Write(bytes, 0, read);
-                        value += read;
-                        outValue += read;
                     }
 
                     chash.Flush();
@@ -293,19 +294,19 @@ namespace EzNet.Library.Helpers
                     fout.Flush();
                     fout.Close();
 
-                    byte[] curHash = hasher.Hash;
+                    byte[] curHash = sha256Hasher2.Hash;
 
 
-                    // 获取比较和旧的散列对象
-                    byte[] oldHash = new byte[hasher.HashSize / 8];
+                    // 通过获取比较和旧的散列对象检测解密是否成功
+                    byte[] oldHash = new byte[sha256Hasher2.HashSize / 8];
                     read = cin.Read(oldHash, 0, oldHash.Length);
                     if ((oldHash.Length != read) || (!CheckByteArrays(oldHash, curHash)))
-                        throw new ApplicationException("文件被破坏");
-                }
+                        throw new ApplicationException("密钥不对或文件被破坏");
 
-                if (outValue != lSize)
-                {
-                    throw new ApplicationException("文件大小不匹配");
+                    /*if (outValue != lSize)
+                    {
+                        throw new ApplicationException("文件大小不匹配");
+                    }*/
                 }
             }
         }
@@ -356,28 +357,20 @@ namespace EzNet.Library.Helpers
                         chash.Write(bytes, 0, read);
                         value += read;
                     }
-                    // 关闭加密流
+
+
+                    // 关闭hash流
                     chash.Flush();
                     chash.Close();
 
                     // 读取散列
                     byte[] hash = hasher.Hash;
+
                     // 输入文件写入散列
                     cout.Write(hash, 0, hash.Length);
 
-                    //克服有时会出现的解密后数据长度出错的问题
-                    //写入8个字节任意值占位（文件长度为long类型，占8个字节）
-                    byte[] stubCode = new byte[sizeof(long)];
-                    cout.Write(stubCode, 0, sizeof(long));
-
                     // 关闭文件流
                     cout.FlushFinalBlock();
-
-                    //明文写入文件长度
-                    BinaryWriter bw2 = new BinaryWriter(fout);
-                    bw2.Write(lSize);
-                    bw2.Flush();
-                    fout.Flush();
 
                     cout.Close();
                 }
