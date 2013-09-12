@@ -28,11 +28,11 @@ namespace EzNet.Library.Helpers
             if (m_needCrypt)
             {
                 // 获取IV和salt
-                byte[] IV = GenerateRandomBytes(16);
-                byte[] salt = GenerateRandomBytes(16);
+                byte[] IV = CryptHelper.GenerateRandomBytes(16);
+                byte[] salt = CryptHelper.GenerateRandomBytes(16);
 
                 // 创建加密对象
-                SymmetricAlgorithm sma = CreateRijndael(password, salt);
+                SymmetricAlgorithm sma = CryptHelper.CreateRijndael(password, salt);
                 sma.IV = IV;
 
                 // 在输出文件开始部分写入IV和salt
@@ -102,35 +102,6 @@ namespace EzNet.Library.Helpers
         /// </summary>
         private static RandomNumberGenerator rand = new RNGCryptoServiceProvider();
 
-        /// <summary>
-        /// 生成指定长度的随机Byte数组
-        /// </summary>
-        /// <param name="count">Byte数组长度</param>
-        /// <returns>随机Byte数组</returns>
-        private static byte[] GenerateRandomBytes(int count)
-        {
-            byte[] bytes = new byte[count];
-            rand.GetBytes(bytes);
-            return bytes;
-        }
-
-        /// <summary>
-        /// 创建Rijndael SymmetricAlgorithm
-        /// </summary>
-        /// <param name="password">密码</param>
-        /// <param name="salt"></param>
-        /// <returns>加密对象</returns>
-        private static SymmetricAlgorithm CreateRijndael(byte[] password, byte[] salt)
-        {
-            PasswordDeriveBytes pdb = new PasswordDeriveBytes(password, salt, "SHA256", 1000);
-
-            SymmetricAlgorithm sma = Rijndael.Create();
-            sma.KeySize = 256;
-            sma.Key = pdb.GetBytes(32);
-            sma.Padding = PaddingMode.PKCS7;
-            return sma;
-        }
-
         private const ulong FC_TAG = 0xFC010203040506CF;
         private HashAlgorithm m_hasher = SHA256.Create();
 
@@ -139,6 +110,59 @@ namespace EzNet.Library.Helpers
             m_outCryptStream.Dispose();
             m_hashStream.Dispose();
             m_fileStream.Dispose();
+        }
+    }
+
+    public class EzNetDeCryptFileStream
+    {
+        private const ulong FC_TAG = 0xFC010203040506CF;
+        private Stream m_stream;
+        private long m_fileSize;
+        private long m_readLength = 0;
+
+        public EzNetDeCryptFileStream(string path, long fileSize, byte[] password, bool isCrypt = true)
+        {
+            m_fileSize = fileSize;
+            FileStream fileStream = File.OpenRead(path);
+            if (isCrypt)
+            {
+                byte[] IV = new byte[16];
+                fileStream.Read(IV, 0, 16);
+                byte[] salt = new byte[16];
+                fileStream.Read(salt, 0, 16);
+                SymmetricAlgorithm sma = CryptHelper.CreateRijndael(password, salt);
+                sma.IV = IV;
+
+                CryptoStream cin = new CryptoStream(fileStream, sma.CreateDecryptor(), CryptoStreamMode.Read);
+                BinaryReader br2 = new BinaryReader(cin);
+                //lSize = br.ReadInt64();
+                ulong tag = br2.ReadUInt64();
+
+                if (FC_TAG != tag)
+                    throw new ApplicationException("密钥不对或文件被破坏");
+
+                m_stream = cin;
+            }
+            else
+            {
+                m_stream = fileStream;
+            }
+
+        }
+
+        public int Read(byte[] array, int offset, int count)
+        {
+            if (m_readLength < m_fileSize)
+            {
+                count = m_readLength + (long)count < m_fileSize ? count : (int)(m_fileSize - m_readLength);
+                int returnedLength = m_stream.Read(array, offset, count);
+                m_readLength += returnedLength;
+                return returnedLength;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 
@@ -174,7 +198,7 @@ namespace EzNet.Library.Helpers
         /// <param name="password">密码</param>
         /// <param name="salt"></param>
         /// <returns>加密对象</returns>
-        private static SymmetricAlgorithm CreateRijndael(byte[] password, byte[] salt)
+        public static SymmetricAlgorithm CreateRijndael(byte[] password, byte[] salt)
         {
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(password, salt, "SHA256", 1000);
 
@@ -195,7 +219,7 @@ namespace EzNet.Library.Helpers
         /// </summary>
         /// <param name="count">Byte数组长度</param>
         /// <returns>随机Byte数组</returns>
-        private static byte[] GenerateRandomBytes(int count)
+        public static byte[] GenerateRandomBytes(int count)
         {
             byte[] bytes = new byte[count];
             rand.GetBytes(bytes);
