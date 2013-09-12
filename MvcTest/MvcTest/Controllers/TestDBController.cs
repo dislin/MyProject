@@ -4,15 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTest.App_Code;
-using CommandLib.Helper;
 using System.Data.SqlClient;
 using System.Data;
 using MvcTest.App_Code.Common;
 using MvcTest.Models;
 using MvcTest.App_Code.Enum;
 using System.Data.Linq;
-using CommandLib.DB.Enity;
-using CommandLib.DB.Service;
+using EzNet.Library.DB.Service;
+using EzNet.Library.DB.Entity;
+using EzNet.Library.Config.Service;
+using EzNet.Library.Config.Entity;
+using EzNet.Library.Config.Enum;
+
 
 namespace MvcTest.Controllers
 {
@@ -62,18 +65,15 @@ namespace MvcTest.Controllers
             //oCmd.Dispose();
             //oSqlCn.Dispose(); 
             #endregion
-            DBSetting dbSetting = new DBSetting()
-            {
-                ConnectionKey = "MainDB",
-                StoredProcedure = "role_GetRoleDataByID"
-            };
-            DBService dbservice = new DBService();
+            ConfigSetting dbconfig = new ConfigSetting(ConfigEnum.ConfigType.Database);
+            DBSetting dbSetting = ConfigService.Instance.GetObject(dbconfig, new DBSetting()).FirstOrDefault();
+            dbSetting.StoredProcedure = "role_GetRoleDataByID";
 
             SqlParameter param = new SqlParameter();
             param.ParameterName = "@idnum";
             param.SqlDbType = SqlDbType.Int;
             param.Direction = ParameterDirection.Input;
-            param.Value = 1;
+            param.Value = 2;
 
             dbSetting.SqlParameterList.Add(param);
             Func<IDataReader, bool> fnDR = (IDataReader oDr) =>
@@ -94,7 +94,7 @@ namespace MvcTest.Controllers
                     return true;
             };
 
-            dbservice.SqlExecuteReader(dbSetting, fnDR);
+            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
             return View(oRoleList);
         }
 

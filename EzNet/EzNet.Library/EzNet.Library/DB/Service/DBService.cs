@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using EzNet.Library.DB.Entity;
+using EzNet.Library.Common;
 
 namespace EzNet.Library.DB.Service
 {
-    public class DBService
+    public class DBService : Singleton <DBService>
     {
+        private DBService() { }
         public void SqlExecuteReader(DBSetting dbSetting, Func<IDataReader, bool> funcDataReaderDelegate)
         {
-            
             SqlConnection oSqlCn = new SqlConnection();
             oSqlCn.ConnectionString = dbSetting.ConnectionString;
             SqlCommand oCmd = new SqlCommand(dbSetting.StoredProcedure, oSqlCn);
