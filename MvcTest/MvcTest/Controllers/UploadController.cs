@@ -55,6 +55,8 @@ namespace MvcTest.Controllers
             var processor = new UploadProcessor(workerRequest);
             processor.UploadFileFoundCallBackFunc = new UploadProcessor.UploadFileFoundCallBack(x =>
             {
+                #region 暂时去除文件名称改写
+                /*
                 string newFile = x + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".EzNet";
                 if (System.IO.File.Exists(newFile))
                 {
@@ -64,6 +66,10 @@ namespace MvcTest.Controllers
                 ///TODO:记载DB，LOG等等
 
                 return newFile;
+                 */
+                #endregion
+
+                return x;
             }
             );
 

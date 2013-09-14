@@ -107,21 +107,72 @@ namespace EzNet.Library.Helpers
 
         public void Dispose()
         {
-            m_outCryptStream.Dispose();
-            m_hashStream.Dispose();
+            if (m_needCrypt)
+            {
+                m_outCryptStream.Dispose();
+                m_hashStream.Dispose();
+            }
             m_fileStream.Dispose();
         }
     }
 
-    public class EzNetDeCryptFileStream
+    public class EzNetDeCryptFileStream : Stream
     {
         private const ulong FC_TAG = 0xFC010203040506CF;
         private Stream m_stream;
         private long m_fileSize;
         private long m_readLength = 0;
 
-        public EzNetDeCryptFileStream(string path, long fileSize, byte[] password, bool isCrypt = true)
+        public EzNetDeCryptFileStream(string path, byte[] password, long fileSize = 0, bool isCrypt = true)
         {
+            if (fileSize <= 0)
+            {
+                // 创建打开文件流
+                using (FileStream fin = File.OpenRead(path))
+                {
+                    byte[] bytes = new byte[8192];
+                    int outValue = 0;
+
+                    byte[] IV = new byte[16];
+                    fin.Read(IV, 0, 16);
+                    byte[] salt = new byte[16];
+                    fin.Read(salt, 0, 16);
+
+
+                    SymmetricAlgorithm sma = CryptHelper.CreateRijndael(password, salt);
+                    sma.IV = IV;
+
+                    //value = 32;
+
+
+                    //探测文件长度
+                    //sha256 HASH固定长度256 bits
+                    HashAlgorithm sha256Hasher = SHA256.Create();
+                    try
+                    {
+                        using (CryptoStream cin = new CryptoStream(fin, sma.CreateDecryptor(), CryptoStreamMode.Read))
+                        {
+                            BinaryReader br2 = new BinaryReader(cin);
+                            //lSize = br.ReadInt64();
+                            ulong tag = br2.ReadUInt64();
+
+                            if (FC_TAG != tag)
+                                throw new ApplicationException("密钥不对或文件被破坏");
+
+                            while (cin.ReadByte() >= 0)
+                            {
+                                ++outValue;
+                            }
+                        }
+                    }
+                    catch (CryptographicException ex)
+                    {
+                    }
+
+                    fileSize = outValue - 256 / 8;
+                }
+            }
+
             m_fileSize = fileSize;
             FileStream fileStream = File.OpenRead(path);
             if (isCrypt)
@@ -150,7 +201,7 @@ namespace EzNet.Library.Helpers
 
         }
 
-        public int Read(byte[] array, int offset, int count)
+        public override int Read(byte[] array, int offset, int count)
         {
             if (m_readLength < m_fileSize)
             {
@@ -163,6 +214,58 @@ namespace EzNet.Library.Helpers
             {
                 return 0;
             }
+        }
+
+        public override bool CanRead
+        {
+            get { return true; }
+        }
+
+        public override bool CanSeek
+        {
+            get { return false; }
+        }
+
+        public override bool CanWrite
+        {
+            get { return false; }
+        }
+
+        public override void Flush()
+        {
+            return;
+        }
+
+        public override long Length
+        {
+            get { return m_fileSize; }
+        }
+
+        public override long Position
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetLength(long value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw new NotImplementedException();
         }
     }
 
