@@ -196,6 +196,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Authentication\Authentication\Authentication.csproj">
+      <Project>{1D6BB07C-644D-462C-8E76-F90C89D9C241}</Project>
+      <Name>Authentication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\EzNet\EzNet.Library\EzNet.Library\EzNet.Library.csproj">
       <Project>{1CFAE1BC-A502-4EE6-850C-5DF562D5387C}</Project>
       <Name>EzNet.Library</Name>

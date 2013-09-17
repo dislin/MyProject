@@ -1,0 +1,8 @@
+D:\MyProject\Authentication\Authentication\bin\Debug\Authentication.dll
+D:\MyProject\Authentication\Authentication\bin\Debug\Authentication.pdb
+D:\MyProject\Authentication\Authentication\bin\Debug\EzNet.Library.dll
+D:\MyProject\Authentication\Authentication\bin\Debug\log4net.dll
+D:\MyProject\Authentication\Authentication\bin\Debug\EzNet.Library.pdb
+D:\MyProject\Authentication\Authentication\obj\Debug\ResolveAssemblyReference.cache
+D:\MyProject\Authentication\Authentication\obj\Debug\Authentication.dll
+D:\MyProject\Authentication\Authentication\obj\Debug\Authentication.pdb

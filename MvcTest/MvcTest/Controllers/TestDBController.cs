@@ -15,6 +15,8 @@ using EzNet.Library.DB.Entity;
 using EzNet.Library.Config.Service;
 using EzNet.Library.Config.Entity;
 using EzNet.Library.Config.Enum;
+using Authentication.Role.Entity;
+using Authentication.Role.Service;
 
 
 namespace MvcTest.Controllers
@@ -27,73 +29,16 @@ namespace MvcTest.Controllers
         public ActionResult TestDB1()
         {
             List<TestRole> oRoleList = new List<TestRole>();
-            #region old code comment
-            //ConfigHelper config = new ConfigHelper(ConfigEnum.Database, "MainDB");
-            //SqlConnection oSqlCn = new SqlConnection();
-            //oSqlCn.ConnectionString = config.GetValue();
-            //SqlCommand oCmd = new SqlCommand("role_GetRoleDataByID", oSqlCn);
-
-            //SqlParameter param = new SqlParameter();
-            //param.ParameterName = "@idnum";
-            //param.SqlDbType = SqlDbType.Int;
-            //param.Direction = ParameterDirection.Input;
-            //param.Value = 1;
-            //oCmd.Parameters.Add(param);
-
-
-            //oCmd.CommandType = CommandType.StoredProcedure;
-            //oSqlCn.Open();
-            //SqlDataReader oDr = oCmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-            //if (oDr.HasRows)
-            //{
-            //    while (oDr.Read())
-            //    {
-            //        TestRole oRole = new TestRole()
-            //        {
-            //            idnum = oDr["idnum"].ToString().ToInt(),
-            //            name = oDr["name"].ToString(),
-            //            permission = oDr["permission"].ToString(),
-            //            status = (CommonEnum.RoleStatusEnum)oDr["status"].ToInt(),
-            //            isdelete = (CommonEnum.RoleDeleteEnum)oDr["isdelete"].ToInt()
-            //        };
-
-            //        oRoleList.Add(oRole);
-            //    }
-            //    oDr.Close();
-            //}
-            //oCmd.Dispose();
-            //oSqlCn.Dispose(); 
-            #endregion
-            ConfigSetting dbconfig = new ConfigSetting(ConfigEnum.ConfigType.Database);
-            DBSetting dbSetting = ConfigService.Instance.GetObject(dbconfig, new DBSetting()).FirstOrDefault();
-            dbSetting.StoredProcedure = "role_GetRoleDataByID";
-
-            SqlParameter param = new SqlParameter();
-            param.ParameterName = "@idnum";
-            param.SqlDbType = SqlDbType.Int;
-            param.Direction = ParameterDirection.Input;
-            param.Value = 2;
-
-            dbSetting.SqlParameterList.Add(param);
-            Action<IDataReader> fnDR = (IDataReader oDr) =>
-            {
-                if (oDr.Read())
-                {
-                        TestRole oRole = new TestRole()
+            RoleEntity role = RoleService.Instance.GetRoleByID(1);
+            TestRole oRole = new TestRole()
                         {
-                            idnum = oDr["idnum"].ToString().ToInt(),
-                            name = oDr["name"].ToString(),
-                            permission = oDr["permission"].ToString(),
-                            status = (CommonEnum.RoleStatusEnum)oDr["status"].ToInt(),
-                            isdelete = (CommonEnum.RoleDeleteEnum)oDr["isdelete"].ToInt()
+                            idnum = role.idnum,
+                            name = role.name,
+                            permission = role.permission,
+                            status = (CommonEnum.RoleStatusEnum)role.status.ToInt(),
+                            isdelete = (CommonEnum.RoleDeleteEnum)role.isdelete.ToInt()
                         };
-                        oRoleList.Add(oRole);
-                }
-                    oDr.Close();
-            };
-
-            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
+            oRoleList.Add(oRole);
             return View(oRoleList);
         }
 

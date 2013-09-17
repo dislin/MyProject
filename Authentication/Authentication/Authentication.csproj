@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1CFAE1BC-A502-4EE6-850C-5DF562D5387C}</ProjectGuid>
+    <ProjectGuid>{1D6BB07C-644D-462C-8E76-F90C89D9C241}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EzNet.Library</RootNamespace>
-    <AssemblyName>EzNet.Library</AssemblyName>
+    <RootNamespace>Authentication</RootNamespace>
+    <AssemblyName>Authentication</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,13 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\Lib\ThirdPart\log4net\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,26 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Extensions.cs" />
-    <Compile Include="Common\Singleton.cs" />
-    <Compile Include="Config\Entity\ConfigSetting.cs" />
-    <Compile Include="Config\Entity\DBConfig.cs" />
-    <Compile Include="Config\Entity\GeneralConfig.cs" />
-    <Compile Include="Config\Entity\IConfig.cs" />
-    <Compile Include="Config\Entity\LogSettingConfig.cs" />
-    <Compile Include="Config\Entity\SPConfig.cs" />
-    <Compile Include="Config\Enum\ConfigEnum.cs" />
-    <Compile Include="Config\Service\ConfigService.cs" />
-    <Compile Include="DB\Entity\DBSetting.cs" />
-    <Compile Include="DB\Service\DBService.cs" />
-    <Compile Include="Helpers\CryptHelper.cs" />
-    <Compile Include="Helpers\UploadHelper.cs" />
-    <Compile Include="Utilities\SimpleLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\EzNetBaseExceptionController.cs" />
+    <Compile Include="Role\Entity\RoleEntity.cs" />
+    <Compile Include="Role\Enum\RoleEnum.cs" />
+    <Compile Include="Role\Service\RoleService.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="DB\Enum\" />
+    <ProjectReference Include="..\..\EzNet\EzNet.Library\EzNet.Library\EzNet.Library.csproj">
+      <Project>{1CFAE1BC-A502-4EE6-850C-5DF562D5387C}</Project>
+      <Name>EzNet.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
