@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="478d0207-d857-4bd3-9aac-adbd3d797e1a" name="leo.lin@XUENN-PC 2013-09-17 16:54:31" runUser="XUENN\leo.lin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6fbcc889-4571-438f-bda1-5a94990e998d">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment userDeploymentRoot="D:\MyProject\MvcTest\TestResults" useDefaultDeploymentRoot="false" enabled="false" runDeploymentRoot="leo.lin_XUENN-PC 2013-09-17 16_54_31">
+      <DeploymentItem filename="D:\MyProject\Authentication\Authentication\bin\Debug\Authentication.dll" />
+      <DeploymentItem filename="D:\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\EzNet.Library.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-09-17T16:54:31.4555316+08:00" queuing="2013-09-17T16:54:32.3205316+08:00" start="2013-09-17T16:54:32.4735316+08:00" finish="2013-09-17T16:54:51.4525316+08:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="GetRoleByIDTest" storage="d:\myproject\mvctest\authenticationtest\bin\debug\authenticationtest.dll" id="03e29e42-18c2-0e21-06c4-61f77c702fe0">
+      <Execution id="9c385e3d-0551-49ed-89ba-a16466a28184" />
+      <TestMethod codeBase="D:/MyProject/MvcTest/AuthenticationTest/bin/Debug/AuthenticationTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AuthenticationTest.RoleServiceTest, AuthenticationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetRoleByIDTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="03e29e42-18c2-0e21-06c4-61f77c702fe0" executionId="9c385e3d-0551-49ed-89ba-a16466a28184" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="9c385e3d-0551-49ed-89ba-a16466a28184" testId="03e29e42-18c2-0e21-06c4-61f77c702fe0" testName="GetRoleByIDTest" computerName="XUENN-PC" duration="00:00:18.2796165" startTime="2013-09-17T16:54:32.6035316+08:00" endTime="2013-09-17T16:54:51.4175316+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c385e3d-0551-49ed-89ba-a16466a28184">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method AuthenticationTest.RoleServiceTest.GetRoleByIDTest threw exception: 
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\MyProject\MvcTest\AuthenticationTest\bin\DebugConfiguration\db.config'.</Message>
+          <StackTrace>   at Authentication.Role.Service.RoleService_Accessor.GetRoleByID(Int32 id)
+   at AuthenticationTest.RoleServiceTest.GetRoleByIDTest() in D:\MyProject\MvcTest\AuthenticationTest\RoleServiceTest.cs:line 83
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="560ce3ba-433a-44d3-a8f9-8c6859ac4ab0" name="leo.lin@XUENN-PC 2013-09-17 16:54:58" runUser="XUENN\leo.lin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6fbcc889-4571-438f-bda1-5a94990e998d">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="leo.lin_XUENN-PC 2013-09-17 16_54_58">
+      <DeploymentItem filename="D:\MyProject\Authentication\Authentication\bin\Debug\Authentication.dll" />
+      <DeploymentItem filename="D:\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\EzNet.Library.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-09-17T16:54:58.5165316+08:00" queuing="2013-09-17T16:54:59.4585316+08:00" start="2013-09-17T16:54:59.5905316+08:00" finish="2013-09-17T16:56:25.7265316+08:00" />
+  <ResultSummary outcome="Inconclusive">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="1" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="GetRoleByIDTest" storage="d:\myproject\mvctest\authenticationtest\bin\debug\authenticationtest.dll" id="03e29e42-18c2-0e21-06c4-61f77c702fe0">
+      <Execution id="861861ae-9700-4a73-bca1-cdbe6ec1af11" />
+      <TestMethod codeBase="D:/MyProject/MvcTest/AuthenticationTest/bin/Debug/AuthenticationTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AuthenticationTest.RoleServiceTest, AuthenticationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetRoleByIDTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="03e29e42-18c2-0e21-06c4-61f77c702fe0" executionId="861861ae-9700-4a73-bca1-cdbe6ec1af11" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="861861ae-9700-4a73-bca1-cdbe6ec1af11" testId="03e29e42-18c2-0e21-06c4-61f77c702fe0" testName="GetRoleByIDTest" computerName="XUENN-PC" duration="00:01:25.3211221" startTime="2013-09-17T16:54:59.7185316+08:00" endTime="2013-09-17T16:56:25.6675316+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Inconclusive" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="861861ae-9700-4a73-bca1-cdbe6ec1af11">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Inconclusive failed. Verify the correctness of this test method.</Message>
+          <StackTrace>   at AuthenticationTest.RoleServiceTest.GetRoleByIDTest() in D:\MyProject\MvcTest\AuthenticationTest\RoleServiceTest.cs:line 87
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
