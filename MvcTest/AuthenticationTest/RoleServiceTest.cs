@@ -85,5 +85,43 @@ namespace AuthenticationTest
             //Assert
             Assert.AreEqual(expected, actual.idnum);
         }
+
+        /// <summary>
+        ///A test for CreateRole
+        ///</summary>
+        [TestMethod()]
+        public void CreateRoleTest()
+        {
+            //db config path D:\\MyProject\\MvcTest\\MvcTest\\Configuration\\
+            RoleService_Accessor target = new RoleService_Accessor(); // TODO: Initialize to an appropriate value
+            RoleEntity role = new RoleEntity()
+            {
+                name = "TestLeo",
+                status = Authentication.Role.Enum.RoleEnum.RoleStatusEnum.InActive,
+                creater = "testor",
+                permission = "none"
+            };
+            bool expected = true; // TODO: Initialize to an appropriate value
+            bool actual;
+            actual = target.CreateRole(role);
+            Assert.AreEqual(expected, actual);
+            //Assert.Inconclusive("Verify the correctness of this test method.");
+        }
+
+        /// <summary>
+        ///A test for UpdateRole
+        ///</summary>
+        [TestMethod()]
+        public void UpdateRoleTest()
+        {
+            //db config path D:\\MyProject\\MvcTest\\MvcTest\\Configuration\\
+            RoleService_Accessor target = new RoleService_Accessor(); // TODO: Initialize to an appropriate value
+            RoleEntity role = target.GetRoleByID(3); // TODO: Initialize to an appropriate value
+            role.name = "Yang Hang";
+            bool expected = true; // TODO: Initialize to an appropriate value
+            bool actual;
+            actual = target.UpdateRole(role);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

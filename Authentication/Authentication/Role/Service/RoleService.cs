@@ -55,5 +55,120 @@ namespace Authentication.Role.Service
             DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
             return oRole;
         }
+
+        public bool CreateRole(RoleEntity role)
+        {
+            bool isSuccess = false;
+            ConfigSetting dbconfig = new ConfigSetting(ConfigEnum.ConfigType.Database);
+            DBSetting dbSetting = ConfigService.Instance.GetObject(dbconfig, new DBSetting()).FirstOrDefault();
+            dbSetting.StoredProcedure = "role_CreateRoleData";
+
+            if (role == null)
+            {
+                return false;
+            }
+
+            for (int intNum = 0; intNum < 4; intNum += 1)
+            {
+                SqlParameter param = new SqlParameter();
+                switch (intNum)
+                {
+                    case 0 :
+                        param.ParameterName = "@name";
+                        param.SqlDbType = SqlDbType.NVarChar;
+                        param.Value = role.name;
+                        break;
+                    case 1:
+                        param.ParameterName = "@status";
+                        param.SqlDbType = SqlDbType.Int;
+                        param.Value = (int)role.status;
+                        break;
+                    case 2:
+                        param.ParameterName = "@permission";
+                        param.SqlDbType = SqlDbType.NVarChar;
+                        param.Value = role.permission;
+                        break;
+                    case 3:
+                        param.ParameterName = "@creater";
+                        param.SqlDbType = SqlDbType.NVarChar;
+                        param.Value = role.creater;
+                        break;
+                }
+                param.Direction = ParameterDirection.Input;
+                dbSetting.SqlParameterList.Add(param);
+            }
+
+            Action<IDataReader> fnDR = (IDataReader oDr) =>
+            {
+                if (oDr.Read())
+                {
+                    isSuccess = (oDr["StatusValue"].ToInt() == 1);
+                }
+                oDr.Close();
+            };
+
+            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
+            return isSuccess;
+        }
+
+        public bool UpdateRole(RoleEntity role)
+        {
+            bool isSuccess = false;
+            ConfigSetting dbconfig = new ConfigSetting(ConfigEnum.ConfigType.Database);
+            DBSetting dbSetting = ConfigService.Instance.GetObject(dbconfig, new DBSetting()).FirstOrDefault();
+            dbSetting.StoredProcedure = "role_UpdateRoleData";
+
+            if (role == null)
+            {
+                return false;
+            }
+
+            for (int intNum = 0; intNum < 5; intNum += 1)
+            {
+                SqlParameter param = new SqlParameter();
+                switch (intNum)
+                {
+                    case 0:
+                        param.ParameterName = "@name";
+                        param.SqlDbType = SqlDbType.NVarChar;
+                        param.Value = role.name;
+                        break;
+                    case 1:
+                        param.ParameterName = "@status";
+                        param.SqlDbType = SqlDbType.Int;
+                        param.Value = (int)role.status;
+                        break;
+                    case 2:
+                        param.ParameterName = "@permission";
+                        param.SqlDbType = SqlDbType.NVarChar;
+                        param.Value = role.permission;
+                        break;
+                    case 3:
+                        param.ParameterName = "@modifier";
+                        param.SqlDbType = SqlDbType.NVarChar;
+                        param.Value = role.modifier;
+                        break;
+                    case 4:
+                        param.ParameterName = "@idnum";
+                        param.SqlDbType = SqlDbType.Int;
+                        param.Value = (int)role.idnum;
+                        break;
+                }
+                param.Direction = ParameterDirection.Input;
+                dbSetting.SqlParameterList.Add(param);
+            }
+
+            Action<IDataReader> fnDR = (IDataReader oDr) =>
+            {
+                if (oDr.Read())
+                {
+                    isSuccess = (oDr["StatusValue"].ToInt() == 1);
+                }
+                oDr.Close();
+            };
+
+            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
+            return isSuccess;
+        }
     }
 }

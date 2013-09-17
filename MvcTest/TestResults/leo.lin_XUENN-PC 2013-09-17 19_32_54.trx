@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="ede8ecf3-7f33-49b3-8669-f67c4f4abac9" name="leo.lin@XUENN-PC 2013-09-17 19:32:54" runUser="XUENN\leo.lin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6fbcc889-4571-438f-bda1-5a94990e998d">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="leo.lin_XUENN-PC 2013-09-17 19_32_54">
+      <DeploymentItem filename="D:\MyProject\Authentication\Authentication\bin\Debug\Authentication.dll" />
+      <DeploymentItem filename="D:\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\EzNet.Library.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-09-17T19:32:54.0404993+08:00" queuing="2013-09-17T19:32:54.8504993+08:00" start="2013-09-17T19:32:54.9964993+08:00" finish="2013-09-17T19:33:08.0484993+08:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="XUENN-PC" outcome="Error" timestamp="2013-09-17T19:33:08.0474993+08:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="UpdateRoleTest" storage="d:\myproject\mvctest\authenticationtest\bin\debug\authenticationtest.dll" id="a471bc8f-1863-026c-184c-c3ca1d342e22">
+      <Execution id="fa711284-ed6d-49ff-b34a-69129a01b653" />
+      <TestMethod codeBase="D:/MyProject/MvcTest/AuthenticationTest/bin/Debug/AuthenticationTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AuthenticationTest.RoleServiceTest, AuthenticationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="UpdateRoleTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="a471bc8f-1863-026c-184c-c3ca1d342e22" executionId="fa711284-ed6d-49ff-b34a-69129a01b653" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="fa711284-ed6d-49ff-b34a-69129a01b653" testId="a471bc8f-1863-026c-184c-c3ca1d342e22" testName="UpdateRoleTest" computerName="XUENN-PC" duration="00:00:12.9280000" startTime="2013-09-17T19:32:55.1204993+08:00" endTime="2013-09-17T19:33:08.0484993+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fa711284-ed6d-49ff-b34a-69129a01b653">
+    </UnitTestResult>
+  </Results>
+</TestRun>

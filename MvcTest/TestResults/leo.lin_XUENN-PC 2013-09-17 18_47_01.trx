@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="0fb47c80-513b-43eb-9bc5-3d2c9e03568f" name="leo.lin@XUENN-PC 2013-09-17 18:47:01" runUser="XUENN\leo.lin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6fbcc889-4571-438f-bda1-5a94990e998d">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="leo.lin_XUENN-PC 2013-09-17 18_47_01">
+      <DeploymentItem filename="D:\MyProject\Authentication\Authentication\bin\Debug\Authentication.dll" />
+      <DeploymentItem filename="D:\MyProject\EzNet\EzNet.Library\EzNet.Library\bin\Debug\EzNet.Library.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-09-17T18:47:01.6534993+08:00" queuing="2013-09-17T18:47:02.6514993+08:00" start="2013-09-17T18:47:02.8304993+08:00" finish="2013-09-17T18:47:37.3974993+08:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="CreateRoleTest" storage="d:\myproject\mvctest\authenticationtest\bin\debug\authenticationtest.dll" id="ccb869f5-3234-882d-6f41-6fbf520ca8af">
+      <Execution id="38af8fd2-b151-443f-bbe7-96631608f9fa" />
+      <TestMethod codeBase="D:/MyProject/MvcTest/AuthenticationTest/bin/Debug/AuthenticationTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="AuthenticationTest.RoleServiceTest, AuthenticationTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="CreateRoleTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="ccb869f5-3234-882d-6f41-6fbf520ca8af" executionId="38af8fd2-b151-443f-bbe7-96631608f9fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="38af8fd2-b151-443f-bbe7-96631608f9fa" testId="ccb869f5-3234-882d-6f41-6fbf520ca8af" testName="CreateRoleTest" computerName="XUENN-PC" duration="00:00:33.8819738" startTime="2013-09-17T18:47:02.9594993+08:00" endTime="2013-09-17T18:47:37.3454993+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="38af8fd2-b151-443f-bbe7-96631608f9fa">
+    </UnitTestResult>
+  </Results>
+</TestRun>
