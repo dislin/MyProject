@@ -76,7 +76,7 @@ namespace MvcTest.Controllers
             param.Value = 2;
 
             dbSetting.SqlParameterList.Add(param);
-            Func<IDataReader, bool> fnDR = (IDataReader oDr) =>
+            Action<IDataReader> fnDR = (IDataReader oDr) =>
             {
                 if (oDr.Read())
                 {
@@ -91,7 +91,6 @@ namespace MvcTest.Controllers
                         oRoleList.Add(oRole);
                 }
                     oDr.Close();
-                    return true;
             };
 
             DBService.Instance.SqlExecuteReader(dbSetting, fnDR);

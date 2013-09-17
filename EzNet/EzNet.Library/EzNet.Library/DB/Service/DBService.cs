@@ -12,7 +12,7 @@ namespace EzNet.Library.DB.Service
     public class DBService : Singleton <DBService>
     {
         private DBService() { }
-        public void SqlExecuteReader(DBSetting dbSetting, Func<IDataReader, bool> funcDataReaderDelegate)
+        public void SqlExecuteReader(DBSetting dbSetting, Action<IDataReader> actDataReaderDelegate)
         {
             SqlConnection oSqlCn = new SqlConnection();
             oSqlCn.ConnectionString = dbSetting.ConnectionString;
@@ -27,7 +27,7 @@ namespace EzNet.Library.DB.Service
             oSqlCn.Open();
             using (SqlDataReader oDr = oCmd.ExecuteReader(CommandBehavior.CloseConnection))
             {
-                funcDataReaderDelegate.Invoke(oDr);
+                actDataReaderDelegate.Invoke(oDr);
             }
             oCmd.Dispose();
             oSqlCn.Dispose();
