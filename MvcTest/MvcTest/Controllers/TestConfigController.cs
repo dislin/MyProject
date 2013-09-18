@@ -10,11 +10,11 @@ using MvcTest.App_Code.Enum;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
-using EzNet.Library.Config.Service;
-using EzNet.Library.Config.Entity;
-using EzNet.Library.Config.Enum;
-using EzNet.Library.DB.Entity;
-using EzNet.Library.Utilities;
+using EzNets.Library.Config.Service;
+using EzNets.Library.Config.Entity;
+using EzNets.Library.Config.Enum;
+using EzNets.Library.DB.Entity;
+using EzNets.Library.Utilities;
 
 namespace MvcTest.Controllers
 {

@@ -10,11 +10,11 @@ using MvcTest.App_Code.Common;
 using MvcTest.Models;
 using MvcTest.App_Code.Enum;
 using System.Data.Linq;
-using EzNet.Library.DB.Service;
-using EzNet.Library.DB.Entity;
-using EzNet.Library.Config.Service;
-using EzNet.Library.Config.Entity;
-using EzNet.Library.Config.Enum;
+using EzNets.Library.DB.Service;
+using EzNets.Library.DB.Entity;
+using EzNets.Library.Config.Service;
+using EzNets.Library.Config.Entity;
+using EzNets.Library.Config.Enum;
 using Authentication.Role.Entity;
 using Authentication.Role.Service;
 

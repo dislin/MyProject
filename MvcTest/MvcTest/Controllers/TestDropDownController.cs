@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTest.Models;
-using EzNet.Library.Utilities;
+using EzNets.Library.Utilities;
 
 
 namespace MvcTest.Controllers

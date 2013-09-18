@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EzNet.Library.Common;
+using EzNets.Library.Common;
 using Authentication.Role.Entity;
-using EzNet.Library.Config.Entity;
-using EzNet.Library.Config.Enum;
-using EzNet.Library.DB.Entity;
-using EzNet.Library.Config.Service;
+using EzNets.Library.Config.Entity;
+using EzNets.Library.Config.Enum;
+using EzNets.Library.DB.Entity;
+using EzNets.Library.Config.Service;
 using System.Data.SqlClient;
 using System.Data;
 using Authentication.Role.Enum;
-using EzNet.Library.DB.Service;
+using EzNets.Library.DB.Service;
 
 namespace Authentication.Role.Service
 {

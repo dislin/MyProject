@@ -200,9 +200,9 @@
       <Project>{1D6BB07C-644D-462C-8E76-F90C89D9C241}</Project>
       <Name>Authentication</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\EzNet\EzNet.Library\EzNet.Library\EzNet.Library.csproj">
-      <Project>{1CFAE1BC-A502-4EE6-850C-5DF562D5387C}</Project>
-      <Name>EzNet.Library</Name>
+    <ProjectReference Include="..\..\EzNets\EzNets.Library\EzNets.Library.csproj">
+      <Project>{B0D7208E-3550-4333-BDCD-78B0A311FCEB}</Project>
+      <Name>EzNets.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\CommandLib\CommandLib\CommandLib.csproj">
       <Project>{31FB8413-7A8C-46C8-8C31-CCD5DB78E1D0}</Project>

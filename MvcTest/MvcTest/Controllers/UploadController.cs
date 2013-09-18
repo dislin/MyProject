@@ -12,10 +12,10 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Collections;
-using EzNet.Library.Helpers;
-using EzNet.Library.Utilities;
-using EzNet.Library.Config.Entity;
-using EzNet.Library.Config.Service;
+using EzNets.Library.Helpers;
+using EzNets.Library.Utilities;
+using EzNets.Library.Config.Entity;
+using EzNets.Library.Config.Service;
 
 namespace MvcTest.Controllers
 {
