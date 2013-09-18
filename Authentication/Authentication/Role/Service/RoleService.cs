@@ -52,7 +52,7 @@ namespace Authentication.Role.Service
                 oDr.Close();
             };
 
-            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
+            DBService.Instance.ExecuteReader(dbSetting, fnDR);
             return oRole;
         }
 
@@ -107,7 +107,7 @@ namespace Authentication.Role.Service
                 oDr.Close();
             };
 
-            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
+            DBService.Instance.ExecuteReader(dbSetting, fnDR);
             return isSuccess;
         }
 
@@ -167,7 +167,7 @@ namespace Authentication.Role.Service
                 oDr.Close();
             };
 
-            DBService.Instance.SqlExecuteReader(dbSetting, fnDR);
+            DBService.Instance.ExecuteReader(dbSetting, fnDR);
             return isSuccess;
         }
     }

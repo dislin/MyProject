@@ -204,14 +204,6 @@
       <Project>{B0D7208E-3550-4333-BDCD-78B0A311FCEB}</Project>
       <Name>EzNets.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\CommandLib\CommandLib\CommandLib.csproj">
-      <Project>{31FB8413-7A8C-46C8-8C31-CCD5DB78E1D0}</Project>
-      <Name>CommandLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestLib\TestLib.csproj">
-      <Project>{39583781-B337-4F8C-9401-6748FFCF8050}</Project>
-      <Name>TestLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\TestMsmq\testmsmq1.cshtml" />
