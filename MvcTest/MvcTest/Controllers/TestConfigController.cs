@@ -25,9 +25,9 @@ namespace MvcTest.Controllers
 
         public ActionResult LogConfigTest()
         {
-            m_logger.Fatal("log output by yanghang");
-            m_logger.Debug("log output by yanghang");
-            m_logger.Info("log output by yanghang");
+            logService.Fatal("log output by yanghang");
+            logService.Debug("log output by yanghang");
+            logService.Info("log output by yanghang");
 
             
             //ConfigHelper configLogSetting = new ConfigHelper(ConfigEnum.LogSetting, "Log4NetSetting");
