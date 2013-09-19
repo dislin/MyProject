@@ -169,6 +169,7 @@ namespace EzNets.Library.Helpers
                     }
                     catch (CryptographicException ex)
                     {
+                        Log.LogService.Instance.Exception(ex);
                     }
 
                     fileSize = outValue - 256 / 8;
@@ -388,6 +389,7 @@ namespace EzNets.Library.Helpers
                 }
                 catch (CryptographicException ex)
                 {
+                    Log.LogService.Instance.Exception(ex);
                 }
 
                 long fileSize = outValue - 256 / 8;

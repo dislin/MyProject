@@ -48,14 +48,25 @@ namespace EzNets.Library.Log
             StackTrace st = new StackTrace(ex, true);
             StackFrame frame0 = st.GetFrame(0);
 
-            string[] fileNamePaths = frame0.GetFileName().Split('\\');
+            string fileName = frame0.GetFileName();
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                string[] fileNamePaths = frame0.GetFileName().Split('\\');
 
-            sb.AppendFormat("Message:{0}; In {1}.{2}; At {3}:{4} ",
+                sb.AppendFormat("Message:{0}; In {1}.{2}; At {3}:{4} ",
+                    ex.Message,
+                    ex.Source,
+                    ex.TargetSite.Name,
+                    fileNamePaths[fileNamePaths.Length - 1],
+                    frame0.GetFileLineNumber());
+            }
+            else
+            {
+                sb.AppendFormat("Message:{0}; In {1}.{2} ",
                 ex.Message,
                 ex.Source,
-                ex.TargetSite.Name,
-                fileNamePaths[fileNamePaths.Length - 1],
-                frame0.GetFileLineNumber());
+                ex.TargetSite.Name);
+            }
 
             m_FatalLogger.Fatal(sb.ToString());
         }
