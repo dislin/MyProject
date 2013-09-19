@@ -7,21 +7,33 @@
         @{
             if (Model.Count > 0)
             {
-                        foreach(SystemCatalog group in Model)
-                        {
-                            <div class="topic">
-                                <span class="topic-title">@group.GroupName</span>
-                                <div class="topic-list">
-                                    @{
-                                        foreach(SystemCatalogItem item in group.Item){
-                                        <ul>
-                                            <li><a href="@item.Url" target="@item.Target">@item.Name</a></li>
-                                        </ul>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        }
+                int intCounter = 0;
+                <table id="topic-table">
+                @foreach(SystemCatalog group in Model)
+                {
+                    if (intCounter % 5 == 0) {
+                        @Html.Raw("<tr>")
+                    }
+                    <td>
+                    <div class="topic">
+                        <span class="topic-title">@group.GroupName</span>
+                        <div class="topic-list">
+                            @foreach (SystemCatalogItem item in group.Item)
+                            {
+                                <ul>
+                                    <li><a href="@item.Url" target="@item.Target">@item.Name</a></li>
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                    </td>
+                    if (intCounter % 5 == 4)
+                    {
+                        @Html.Raw("</tr>")
+                    }
+                    intCounter += 1;
+                }
+                </table>
             }
         }
     </div>

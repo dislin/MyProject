@@ -33,3 +33,14 @@
 {
     color: Orange;
 }
+
+#topic-table
+{
+    width: 100%;
+}
+
+#topic-table, #topic-table tr td
+{
+    border: white 0px solid;
+    vertical-align: top;
+    }
