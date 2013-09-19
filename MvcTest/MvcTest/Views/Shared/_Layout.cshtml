@@ -9,18 +9,9 @@
     <div class="page">
         <div id="header">
             <div id="title">
-                <h1>My MVC Application</h1>
+               <a href="/Home">Test Project</a>
             </div>
-            <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
-            </div>
-            <div id="menucontainer">
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Upload", "Index", "Upload")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                </ul>
-            </div>
+
         </div>
         <div id="main">
             @RenderBody()

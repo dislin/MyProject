@@ -4,7 +4,7 @@ to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #5c87b2;
+    background-color: #999999;
     font-size: .85em;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
@@ -77,7 +77,7 @@ h5, h6 {
 /* you can specify a greater or lesser percentage for the 
 page width. Or, you can specify an exact pixel width. */
 .page {
-    width: 90%;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -246,32 +246,26 @@ nav,
     margin-top: 40px;
 }
 
-div#title {
+#title {
+    font-size: 2em;
     display: block;
-    float: left;
     text-align: left;
-}
-
-#logindisplay {
-    font-size: 1.1em;
-    display: block;
-    text-align: right;
     margin: 10px;
     color: White;
 }
 
-#logindisplay a:link {
+#title a:link {
     color: white;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-#logindisplay a:visited {
+#title a:visited {
     color: white;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-#logindisplay a:hover {
-    color: white;
+#title a:hover {
+    color: orange;
     text-decoration: none;
 }
 
