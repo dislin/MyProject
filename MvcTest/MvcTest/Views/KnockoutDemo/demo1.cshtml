@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Computed Demo";
+}
+@section JSSection{
+    <script src="@Url.Content("~/CDN/js/Lib/knockout-2.3.0.js")" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        function myNumber() {
+            var self = this;
+            self.numberA = ko.observable(1);
+            self.numberB = ko.observable(2);
+            
+            self.numberResult = ko.computed(function(){
+                var numA = self.numberA(),
+                    numB = self.numberB(),
+                    isSuccess = true;
+
+                    if(isNaN(numA))
+                    {
+                        alert("Number A must be number.");
+                        isSuccess = false;
+                    } else{
+                        numA = Number(numA);
+                    }
+
+                    if(isNaN(numB))
+                    {
+                        alert("Number B must be number.");
+                        isSuccess = false;
+                    } else{
+                        numB = Number(numB);
+                    }
+
+                    if(isSuccess) {
+                        return numA + numB;
+                    } else {
+                        return "Error";
+                    }
+            });
+        }
+        myNumber.prototype = {
+            numberA: function(){},
+            numberB: function(){},
+            numberResult: function(){},
+        };
+        myNumber.prototype.constructor = myNumber;
+
+        $(function () {
+            ko.applyBindings(new myNumber());
+        });
+    </script>
+}
+<h2>Computed Demo</h2>
+
+<span>Math: A+B = ?</span>
+<div>
+A: <input type="text" data-bind="value: numberA" /> 
+B: <input type="text" data-bind="value: numberB" />
+</div>
+<br />
+<div>
+    <span data-bind="text: numberA"></span> + <span data-bind="text: numberB"></span> = <span data-bind="text: numberResult"></span>
+</div>
+
