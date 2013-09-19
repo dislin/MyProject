@@ -9,12 +9,18 @@
             {
                         foreach(SystemCatalog group in Model)
                         {
-                            <h2>@group.GroupName</h2>
-                            foreach(SystemCatalogItem item in group.Item){
-                            <ul>
-                                <li><a href="@item.Url" target="@item.Target">@item.Name</a></li>
-                            </ul>
-                            }
+                            <div class="topic">
+                                <span class="topic-title">@group.GroupName</span>
+                                <div class="topic-list">
+                                    @{
+                                        foreach(SystemCatalogItem item in group.Item){
+                                        <ul>
+                                            <li><a href="@item.Url" target="@item.Target">@item.Name</a></li>
+                                        </ul>
+                                        }
+                                    }
+                                </div>
+                            </div>
                         }
             }
         }

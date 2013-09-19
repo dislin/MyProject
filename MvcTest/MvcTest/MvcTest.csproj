@@ -89,31 +89,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CDN\js\Lib\jquery-1.10.2.js" />
-    <Content Include="CDN\js\Lib\jquery-1.6.4-vsdoc.js" />
-    <Content Include="CDN\js\Lib\jquery-1.6.4.js" />
-    <Content Include="CDN\js\Lib\jquery-1.6.4.min.js" />
-    <Content Include="CDN\js\Lib\jquery-ui-1.8.20.js" />
-    <Content Include="CDN\js\Lib\jquery-ui-1.8.20.min.js" />
-    <Content Include="CDN\js\Lib\jquery.extend.js" />
-    <Content Include="CDN\js\Lib\jquery.signalR-0.5.2.js" />
-    <Content Include="CDN\js\Lib\jquery.signalR-0.5.2.min.js" />
-    <Content Include="CDN\js\Lib\jquery.unobtrusive-ajax.js" />
-    <Content Include="CDN\js\Lib\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="CDN\js\Lib\jquery.validate-vsdoc.js" />
-    <Content Include="CDN\js\Lib\jquery.validate.js" />
-    <Content Include="CDN\js\Lib\jquery.validate.min.js" />
-    <Content Include="CDN\js\Lib\jquery.validate.unobtrusive.js" />
-    <Content Include="CDN\js\Lib\jquery.validate.unobtrusive.min.js" />
-    <Content Include="CDN\js\Lib\MicrosoftAjax.debug.js" />
-    <Content Include="CDN\js\Lib\MicrosoftAjax.js" />
-    <Content Include="CDN\js\Lib\MicrosoftMvcAjax.debug.js" />
-    <Content Include="CDN\js\Lib\MicrosoftMvcAjax.js" />
-    <Content Include="CDN\js\Lib\MicrosoftMvcValidation.debug.js" />
-    <Content Include="CDN\js\Lib\MicrosoftMvcValidation.js" />
-    <Content Include="CDN\js\Lib\modernizr-1.7.js" />
-    <Content Include="CDN\js\Lib\modernizr-1.7.min.js" />
-    <Content Include="CDN\js\View\TestDropDown\TestDropDownJS.js" />
+    <Content Include="CDN\Css\Theme.css" />
+    <Content Include="CDN\Images\bg.jpg" />
+    <Content Include="CDN\Js\Lib\jquery-1.10.2.js" />
+    <Content Include="CDN\Js\Lib\jquery-1.6.4-vsdoc.js" />
+    <Content Include="CDN\Js\Lib\jquery-1.6.4.js" />
+    <Content Include="CDN\Js\Lib\jquery-1.6.4.min.js" />
+    <Content Include="CDN\Js\Lib\jquery-ui-1.8.20.js" />
+    <Content Include="CDN\Js\Lib\jquery-ui-1.8.20.min.js" />
+    <Content Include="CDN\Js\Lib\jquery.extend.js" />
+    <Content Include="CDN\Js\Lib\jquery.signalR-0.5.2.js" />
+    <Content Include="CDN\Js\Lib\jquery.signalR-0.5.2.min.js" />
+    <Content Include="CDN\Js\Lib\jquery.unobtrusive-ajax.js" />
+    <Content Include="CDN\Js\Lib\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="CDN\Js\Lib\jquery.validate-vsdoc.js" />
+    <Content Include="CDN\Js\Lib\jquery.validate.js" />
+    <Content Include="CDN\Js\Lib\jquery.validate.min.js" />
+    <Content Include="CDN\Js\Lib\jquery.validate.unobtrusive.js" />
+    <Content Include="CDN\Js\Lib\jquery.validate.unobtrusive.min.js" />
+    <Content Include="CDN\Js\Lib\knockout-2.3.0.debug.js" />
+    <Content Include="CDN\Js\Lib\knockout-2.3.0.js" />
+    <Content Include="CDN\Js\Lib\MicrosoftAjax.debug.js" />
+    <Content Include="CDN\Js\Lib\MicrosoftAjax.js" />
+    <Content Include="CDN\Js\Lib\MicrosoftMvcAjax.debug.js" />
+    <Content Include="CDN\Js\Lib\MicrosoftMvcAjax.js" />
+    <Content Include="CDN\Js\Lib\MicrosoftMvcValidation.debug.js" />
+    <Content Include="CDN\Js\Lib\MicrosoftMvcValidation.js" />
+    <Content Include="CDN\Js\Lib\modernizr-1.7.js" />
+    <Content Include="CDN\Js\Lib\modernizr-1.7.min.js" />
+    <Content Include="CDN\Js\View\TestDropDown\TestDropDownJS.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -170,8 +174,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="README.jQuery.vsdoc.txt" />
-    <Content Include="CDN\js\Lib\knockout-2.3.0.debug.js" />
-    <Content Include="CDN\js\Lib\knockout-2.3.0.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -179,7 +181,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
+    <Content Include="CDN\Css\Site.css" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
@@ -194,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="CDN\css\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +276,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\KnockoutDemo\demo2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\KnockoutDemo\demo3.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
