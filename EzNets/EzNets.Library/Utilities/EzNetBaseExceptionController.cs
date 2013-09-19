@@ -9,12 +9,13 @@ using System.Web.Mvc;
 using EzNets.Library.Utilities;
 using EzNets.Library.Config.Entity;
 using EzNets.Library.Config.Service;
+using EzNets.Library.Log;
 
 namespace EzNets.Library.Utilities
 {
     public class EzNetBaseExceptionController : Controller
     {
-        protected SimpleLogger m_logger = SimpleLogger.Instance(); 
+        protected LogService logService = LogService.Instance;
 
         /// <summary>
         /// Handle all exceptions with log output, etc.
@@ -28,7 +29,7 @@ namespace EzNets.Library.Utilities
             {
                 if (httpEx.GetHttpCode() != 401)
                 {
-                    m_logger.Exception(httpEx);
+                    logService.Exception(httpEx);
                 }
                 else
                 {
@@ -38,7 +39,7 @@ namespace EzNets.Library.Utilities
             else
             {
                 System.Exception ex = filterContext.Exception;
-                m_logger.Exception(ex); 
+                logService.Exception(ex); 
 
             }
 

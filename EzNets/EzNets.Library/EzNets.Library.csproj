@@ -61,6 +61,7 @@
     <Compile Include="DB\Service\DBService.cs" />
     <Compile Include="Helpers\CryptHelper.cs" />
     <Compile Include="Helpers\UploadHelper.cs" />
+    <Compile Include="Log\LogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\EzNetBaseExceptionController.cs" />
     <Compile Include="Utilities\SimpleLogger.cs" />
