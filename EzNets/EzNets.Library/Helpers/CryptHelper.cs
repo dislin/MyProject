@@ -120,11 +120,13 @@ namespace EzNets.Library.Helpers
     {
         private const ulong FC_TAG = 0xFC010203040506CF;
         private Stream m_stream;
+        private FileStream m_innerFileStream;
         private long m_fileSize;
         private long m_readLength = 0;
 
         public EzNetDeCryptFileStream(string path, byte[] password, long fileSize = 0, bool isCrypt = true)
         {
+            m_innerFileStream = File.OpenRead(path);
             if (fileSize <= 0)
             {
                 // 创建打开文件流
@@ -174,17 +176,17 @@ namespace EzNets.Library.Helpers
             }
 
             m_fileSize = fileSize;
-            FileStream fileStream = File.OpenRead(path);
+            //FileStream fileStream = File.OpenRead(path);
             if (isCrypt)
             {
                 byte[] IV = new byte[16];
-                fileStream.Read(IV, 0, 16);
+                m_innerFileStream.Read(IV, 0, 16);
                 byte[] salt = new byte[16];
-                fileStream.Read(salt, 0, 16);
+                m_innerFileStream.Read(salt, 0, 16);
                 SymmetricAlgorithm sma = CryptHelper.CreateRijndael(password, salt);
                 sma.IV = IV;
 
-                CryptoStream cin = new CryptoStream(fileStream, sma.CreateDecryptor(), CryptoStreamMode.Read);
+                CryptoStream cin = new CryptoStream(m_innerFileStream, sma.CreateDecryptor(), CryptoStreamMode.Read);
                 BinaryReader br2 = new BinaryReader(cin);
                 //lSize = br.ReadInt64();
                 ulong tag = br2.ReadUInt64();
@@ -196,9 +198,15 @@ namespace EzNets.Library.Helpers
             }
             else
             {
-                m_stream = fileStream;
+                m_stream = m_innerFileStream;
             }
 
+        }
+
+        public override void Close()
+        {
+            m_innerFileStream.Close();
+            base.Close();
         }
 
         public override int Read(byte[] array, int offset, int count)

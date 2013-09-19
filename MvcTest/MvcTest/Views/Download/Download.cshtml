@@ -1,0 +1,23 @@
+﻿@using MvcTest.Models;
+@model IEnumerable<FileLink> 
+@{
+    ViewBag.Title = "Download Page";
+}
+    <div>
+        @{
+            if (Model != null && Model.Count() > 0)
+            {
+
+                foreach (FileLink item in Model)
+                {
+                    <ul>
+                        <li><a href="@item.Url" target="@item.Target">@item.Name</a></li>
+                    </ul>
+                }            
+            }
+            else
+            { 
+                  <li>No file upload.</li>
+            }
+        }
+    </div>
