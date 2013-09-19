@@ -14,7 +14,7 @@
     <AssemblyName>MvcTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <JSLintSkip>\js\|\Content\|\CDN\js\|\App_Code\Mvc\</JSLintSkip>
+    <JSLintSkip>\js\|\Content\|\CDN\js\|\App_Code\Mvc\|\CDN\</JSLintSkip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
