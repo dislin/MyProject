@@ -36,12 +36,14 @@
                         return "Error";
                     }
             });
-        }
+            }
+
         myNumber.prototype = {
             numberA: function(){},
             numberB: function(){},
-            numberResult: function(){},
+            numberResult: function(){}
         };
+
         myNumber.prototype.constructor = myNumber;
 
         $(function () {
