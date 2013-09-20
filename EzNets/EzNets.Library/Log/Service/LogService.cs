@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using EzNets.Library.Common;
 using EzNets.Library.Config.Entity;
 using EzNets.Library.Config.Service;
+using EzNets.Library.Log.Entity;
 
 namespace EzNets.Library.Log
 {
@@ -87,8 +88,5 @@ namespace EzNets.Library.Log
         }
     }
 
-    public class LogSettingEntity
-    {
-        public string Log4NetConfigFileName { get; set; }
-    }
+
 }

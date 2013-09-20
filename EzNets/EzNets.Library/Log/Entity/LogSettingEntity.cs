@@ -5,7 +5,8 @@ using System.Text;
 
 namespace EzNets.Library.Log.Entity
 {
-    class LogSettingEntity
+    public class LogSettingEntity
     {
+        public string Log4NetConfigFileName { get; set; }
     }
 }
