@@ -36,7 +36,7 @@ namespace EzNets.Library.Helpers
         private byte[] _buffer;
         private byte[] _boundaryBytes;
         private byte[] _endHeaderBytes;
-        private byte[] _endFileBytes;
+        private byte[] _endHTTPBytes;
         private byte[] _lineBreakBytes;
         private const string _lineBreak = "\r\n";
         private readonly Regex _filename =
@@ -125,17 +125,27 @@ namespace EzNets.Library.Helpers
             var text = encoding.GetString(body);
             //var text = System.Text.Encoding.Default.GetString(body);
 
-            var fileName = _filename.Matches(text)[0].Groups[1].Value;
-            fileName = Path.GetFileName(fileName); // IE captures full user path; chop it 
+
             if (!Directory.Exists(rootPath))
             {
                 Directory.CreateDirectory(rootPath);
             }
-            var path = Path.Combine(rootPath, fileName);
-            var files = new List<String> { fileName };
 
-            path = this.UploadFileFoundCallBackFunc.Invoke(path);
-            EzNetEnCryptFileStream stream = new EzNetEnCryptFileStream(path, m_password, m_settingEntity.UploadFileSecurity.FileContentEncrypt);
+            var fileName = _filename.Matches(text)[0].Groups[1].Value;
+            fileName = Path.GetFileName(fileName); // IE captures full user path; chop it 
+            
+            var path = Path.Combine(rootPath, fileName);
+
+
+            EzNetEnCryptFileStream stream = null;
+            var files = new List<String>();
+
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                files.Add(fileName);
+                path = this.UploadFileFoundCallBackFunc.Invoke(path);
+                stream = new EzNetEnCryptFileStream(path, m_password, m_settingEntity.UploadFileSecurity.FileContentEncrypt);
+            }
             
             if (preloaded > 0)
             {
@@ -172,59 +182,130 @@ namespace EzNets.Library.Helpers
             var boundary = String.Concat("--", contentType.Substring(bufferIndex));
             _boundaryBytes = encoding.GetBytes(string.Concat(boundary, _lineBreak));
             _endHeaderBytes = encoding.GetBytes(string.Concat(_lineBreak, _lineBreak));
-            _endFileBytes = encoding.GetBytes(string.Concat(_lineBreak, boundary, "--", _lineBreak));
+            _endHTTPBytes = encoding.GetBytes(string.Concat(_lineBreak, boundary, "--", _lineBreak));
             _lineBreakBytes = encoding.GetBytes(string.Concat(_lineBreak + boundary + _lineBreak));
         }
 
         private EzNetEnCryptFileStream ProcessHeaders(byte[] buffer, EzNetEnCryptFileStream stream, Encoding encoding, int count, ICollection<string> files, string rootPath)
         {
-            buffer = AppendBuffer(buffer, count);
-            var startIndex = IndexOf(buffer, _boundaryBytes, 0);
-            if (startIndex != -1)
+            buffer = AppendBuffer(buffer, ref count);
+
+            int resolvedCount = 0;
+
+            //HTTP上传文件流结尾标识
+            var endHttpIndex = -1;
+
+            if (count >= _endHTTPBytes.Length)
             {
-                var endFileIndex = IndexOf(buffer, _endFileBytes, 0);
-                if (endFileIndex != -1)
+                endHttpIndex = IndexOf(buffer, _endHTTPBytes, count - _endHTTPBytes.Length);
+            }
+
+            while (resolvedCount < count)
+            {
+                //文件起始标识
+                var fileStartIndex = -1;
+
+                //两个文件分隔标识
+                var splitIndex = IndexOf(buffer, _lineBreakBytes, resolvedCount);
+
+                //判断是不是第一个文件开头
+                fileStartIndex = IndexOf(buffer, _boundaryBytes, resolvedCount);
+                if (fileStartIndex != 0)
                 {
-                    var precedingBreakIndex = IndexOf(buffer, _lineBreakBytes, 0);
-                    if (precedingBreakIndex > -1)
-                    {
-                        startIndex = precedingBreakIndex;
+                    fileStartIndex = splitIndex;
+                }
+
+                //两个换行：文件头的结尾标识，在它之后是文件真正的内容
+                var endHeaderIndex = IndexOf(buffer, _endHeaderBytes, fileStartIndex > resolvedCount ? fileStartIndex : resolvedCount);
+
+                if (fileStartIndex != -1)
+                {//发现了一个文件的开头
+
+                    if (endHeaderIndex != -1)
+                    {//发现了文件header
+
+                        endHeaderIndex += _endHeaderBytes.Length;
+
+                         //保存上一个文件结尾
+                        int writeCount = fileStartIndex - resolvedCount;
+                        if (writeCount > 0)
+                        {
+                            stream.Write(buffer, resolvedCount, writeCount);
+                            resolvedCount += writeCount;
+                        }
+                        else if (fileStartIndex == 0)
+                        {//当前是第一个文件
+                            resolvedCount = endHeaderIndex;
+                            continue;
+                        }
+
+                        var text = encoding.GetString(buffer, resolvedCount, count - resolvedCount);
+                        var match = _filename.Match(text);
+                        var fileName = match != null ? match.Groups[1].Value : null;
+                        fileName = Path.GetFileName(fileName); // IE captures full user path; chop it    
+                   
+                        
+                        if (!string.IsNullOrEmpty(fileName) && !files.Contains(fileName))
+                        {
+                            //上一个文件完成上传
+                            if (stream != null)
+                            {
+                                stream.Flush();
+                                stream.Close();
+                                stream.Dispose();
+                            }
+
+                            files.Add(fileName);
+                            var filePath = Path.Combine(rootPath, fileName);
+
+                            //建立新文件
+                            filePath = this.UploadFileFoundCallBackFunc.Invoke(filePath);
+                            stream = new EzNetEnCryptFileStream(filePath, this.m_password,this.m_settingEntity.UploadFileSecurity.FileContentEncrypt);
+
+                        }
+                        
+                        resolvedCount = endHeaderIndex;
+
+                        continue;
+
                     }
-                    endFileIndex += _endFileBytes.Length;
-                    var modified = SkipInput(buffer, startIndex, endFileIndex, ref count);
-                    stream.Write(modified, 0, count);
+                    else
+                    {//找不到文件header，数据转到下一块一起处理
+
+                        //保存上一个文件结尾
+                        int writeCount = fileStartIndex - resolvedCount;
+                        if (writeCount > 0)
+                        {
+                            stream.Write(buffer, resolvedCount, writeCount);
+                            resolvedCount += writeCount;
+                        }
+
+                        int remainCount = count - resolvedCount;
+                        _buffer = new byte[remainCount];
+                        Buffer.BlockCopy(buffer, resolvedCount, _buffer, 0, _buffer.Length);
+                        return stream;
+                    }
+
                 }
                 else
                 {
-                    var endHeaderIndex = IndexOf(buffer, _endHeaderBytes, 0);
-                    if (endHeaderIndex != -1)
-                    {
-                        endHeaderIndex += _endHeaderBytes.Length;
-                        var text = encoding.GetString(buffer);
-                        var match = _filename.Match(text);
-                        var fileName = match != null ? match.Groups[1].Value : null;
-                        fileName = Path.GetFileName(fileName); // IE captures full user path; chop it                       
-                        if (!string.IsNullOrEmpty(fileName) && !files.Contains(fileName))
-                        {
-                            files.Add(fileName);
-                            var filePath = Path.Combine(rootPath, fileName);
-                            stream = ProcessNextFile(stream,this.UploadFileFoundCallBackFunc, buffer, count, startIndex, endHeaderIndex, filePath);
-                        }
-                        else
-                        {
-                            var modified = SkipInput(buffer, startIndex, endHeaderIndex, ref count);
-                            stream.Write(modified, 0, count);
-                        }
+                    if(endHttpIndex < 0)
+                    {//没发现文件尾也没发现文件头
+                        SaveFileContent(stream, buffer, resolvedCount, count - resolvedCount);
+                        return stream;
                     }
                     else
-                    {
-                        _buffer = buffer;
+                    {//已经到了HTTP数据流的末尾
+
+                        if (resolvedCount < endHttpIndex)
+                        {
+                            int writeCount = endHttpIndex - resolvedCount;
+                            stream.Write(buffer, resolvedCount, writeCount);
+                        }
+
+                        return stream;
                     }
                 }
-            }
-            else
-            {
-                stream.Write(buffer, 0, count);
             }
             return stream;
         }
@@ -304,7 +385,7 @@ namespace EzNets.Library.Helpers
             return input;
         }
 
-        private byte[] AppendBuffer(byte[] buffer, int count)
+        private byte[] AppendBuffer(byte[] buffer, ref int count)
         {
             var input = new byte[_buffer == null ? buffer.Length : _buffer.Length + count];
             if (_buffer != null)
@@ -313,9 +394,29 @@ namespace EzNets.Library.Helpers
             }
 
             Buffer.BlockCopy(buffer, 0, input, _buffer == null ? 0 : _buffer.Length, count);
+            count += _buffer == null ? 0 : _buffer.Length;
+
             _buffer = null;
             return input;
         }
+
+        private void SaveFileContent(EzNetEnCryptFileStream stream, byte[] buffer,int startIndex,int count)
+        {
+            //防止文件尾标识处于当前数据块和下一块之间
+            //选用_endHTTPBytes.Length是因为它是各标识中最长的
+            if (count > _endHTTPBytes.Length)
+            {
+                stream.Write(buffer, startIndex, count - _endHTTPBytes.Length);
+                _buffer = new byte[_endHTTPBytes.Length];
+                Buffer.BlockCopy(buffer, count - _endHTTPBytes.Length, _buffer, 0, _buffer.Length);
+            }
+            else
+            {
+                _buffer = buffer;
+            }
+
+        }
+        
     }
 
     internal class StaticWorkerRequest :  HttpWorkerRequest
