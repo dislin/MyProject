@@ -6,11 +6,10 @@
 
 @using (Html.BeginForm("Submit", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <text>文件1：</text><input name="file" type="file" id="file1" />
+    <text>文件：</text><input name="file" type="file" id="fileSelect" multiple="" />
+
     <br />
     <br />
-     <text>文件2：</text><input name="file" type="file" id="file2" />
-    <br />
-    <br />
+     <text>文件：</text><input name="file" type="file" id="fileSelect2" multiple="" />
     <input type="submit" value="提交" />
 }
