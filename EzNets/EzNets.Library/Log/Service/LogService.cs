@@ -17,7 +17,7 @@ namespace EzNets.Library.Log
 {
     public class LogService : Singleton<LogService>
     {
-        private log4net.ILog m_Logger;
+        //private log4net.ILog m_Logger;
         //private log4net.ILog m_FatalLogger = LogManager.GetLogger(LogEnum.LogType.FatalLogger.ToString());
         //private log4net.ILog m_DebugLogger = LogManager.GetLogger(LogEnum.LogType.DebugLogger.ToString());
         //private log4net.ILog m_InfoLogger = LogManager.GetLogger(LogEnum.LogType.InfoLogger.ToString());
@@ -76,20 +76,20 @@ namespace EzNets.Library.Log
 
         public void Fatal(object message)
         {
-            m_Logger = LogManager.GetLogger(LogEnum.LogType.FatalLogger.ToString());
-            m_Logger.Fatal(message);
+            log4net.ILog logger = LogManager.GetLogger(LogEnum.LogType.FatalLogger.ToString());
+            logger.Fatal(message);
         }
 
         public void Debug(object message)
         {
-            m_Logger = LogManager.GetLogger(LogEnum.LogType.DebugLogger.ToString());
-            m_Logger.Debug(message);
+            log4net.ILog logger = LogManager.GetLogger(LogEnum.LogType.DebugLogger.ToString());
+            logger.Debug(message);
         }
 
         public void Info(object message)
         {
-            m_Logger = LogManager.GetLogger(LogEnum.LogType.InfoLogger.ToString());
-            m_Logger.Debug(message);
+            log4net.ILog logger = LogManager.GetLogger(LogEnum.LogType.InfoLogger.ToString());
+            logger.Debug(message);
         }
     }
 }
