@@ -11,14 +11,16 @@ using EzNets.Library.Common;
 using EzNets.Library.Config.Entity;
 using EzNets.Library.Config.Service;
 using EzNets.Library.Log.Entity;
+using EzNets.Library.Log.Enum;
 
 namespace EzNets.Library.Log
 {
     public class LogService : Singleton<LogService>
     {
-        private log4net.ILog m_FatalLogger = LogManager.GetLogger("FatalLogger");
-        private log4net.ILog m_DebugLogger=LogManager.GetLogger("DebugLogger");
-        private log4net.ILog m_InfoLogger = LogManager.GetLogger("InfoLogger");
+        private log4net.ILog m_Logger;
+        //private log4net.ILog m_FatalLogger = LogManager.GetLogger(LogEnum.LogType.FatalLogger.ToString());
+        //private log4net.ILog m_DebugLogger = LogManager.GetLogger(LogEnum.LogType.DebugLogger.ToString());
+        //private log4net.ILog m_InfoLogger = LogManager.GetLogger(LogEnum.LogType.InfoLogger.ToString());
 
         //Singleton只会呼叫一次
         private LogService()
@@ -69,24 +71,25 @@ namespace EzNets.Library.Log
                 ex.TargetSite.Name);
             }
 
-            m_FatalLogger.Fatal(sb.ToString());
+            this.Fatal(sb.ToString());
         }
 
         public void Fatal(object message)
         {
-            m_FatalLogger.Fatal(message);
+            m_Logger = LogManager.GetLogger(LogEnum.LogType.FatalLogger.ToString());
+            m_Logger.Fatal(message);
         }
 
         public void Debug(object message)
         {
-            m_DebugLogger.Debug(message);
+            m_Logger = LogManager.GetLogger(LogEnum.LogType.DebugLogger.ToString());
+            m_Logger.Debug(message);
         }
 
         public void Info(object message)
         {
-            m_InfoLogger.Debug(message);
+            m_Logger = LogManager.GetLogger(LogEnum.LogType.InfoLogger.ToString());
+            m_Logger.Debug(message);
         }
     }
-
-
 }
