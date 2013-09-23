@@ -46,6 +46,7 @@
                     return "Error";
                 }
             });
+            self.dataListA = ko.observableArray(self.dataListA);
         }
 
         myNumber.prototype = {
@@ -63,7 +64,15 @@
         myNumber.prototype.constructor = myNumber;
 
         $(function () {
-            ko.applyBindings(new myNumber());
+            var oList = new myNumber();
+            ko.applyBindings(oList);
+            $("#btnInsertA").on("click", function () {
+                var intVal = Number($("#ddlValue").val()),
+                    txtText = $("#ddlText").val();
+                oList.dataListA.push(new ddlEntity(intVal, txtText));
+                $("#ddlValue, #ddlText").val("");
+                oList.numberA(intVal);
+            });
         });
     </script>
 }
@@ -71,15 +80,15 @@
 
 <span>Math: A+B = ?</span><p />
 <div>
-    A: <select data-bind="options: dataListA, optionsText: 'txt', optionsValue: 'val', value: numberA"></select>
-    B: <select data-bind="options: dataListB, optionsText: 'txt', optionsValue: 'val', value: numberB"></select>
+    A: <select id="ddlA" data-bind="options: dataListA, optionsText: 'txt', optionsValue: 'val', value: numberA"></select>
+    B: <select id="ddlB" data-bind="options: dataListB, optionsText: 'txt', optionsValue: 'val', value: numberB"></select>
     <a href="javascript:void(0);" data-bind="click: getMaximun">maximun</a>
 </div>
 <br />
 <div>
-    Text: <input id="ddlText" type="text" /><p />
-    Value: <input id="ddlValue" type="text" /> 
-    <input id="btnAddA" type="button" value="Insert to A" />
+    Text: <input id="ddlText" type="text" value="five"/><p />
+    Value: <input id="ddlValue" type="text" value="5"/> 
+    <input id="btnInsertA" type="button" value="Insert to A" />
 </div>
 <br />
 <div>
