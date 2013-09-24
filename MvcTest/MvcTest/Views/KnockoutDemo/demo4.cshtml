@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Data List demo";
+}
+@section JSSection{
+    <script src="@Url.Content("~/CDN/js/Lib/knockout-2.3.0.js")" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        function peopleEntity(name, age, sex, location) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            this.location = location;
+        }
+
+        peopleEntity.prototype = {
+            name: "",
+            age: 0,
+            sex: "",
+            location: ""
+        };
+
+        peopleEntity.prototype.constructor = peopleEntity;
+
+        function demo4ViewModel() { }
+        demo4ViewModel.prototype = {
+            dataSource: ko.observableArray(),
+            deletePeople: function (ppl) {
+                this.dataSource.remove(ppl);
+            }
+        };
+        demo4ViewModel.prototype.constructor = demo4ViewModel;
+
+        $(function () {
+            var oList = new demo4ViewModel();
+            //oList.dataSource = ko.observableArray();
+            oList.dataSource.push(new peopleEntity("Leo", 30, "Male", "SG"));
+            oList.dataSource.push(new peopleEntity("YH", 29, "Male", "CN"));
+            
+            ko.applyBindings(oList);
+        });
+    </script>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Location</th>
+            <th>Event</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: dataSource">
+        <tr>
+            <td><span data-bind="text: name"></span></td>
+            <td><span data-bind="text: age"></span></td>
+            <td><span data-bind="text: sex"></span></td>
+            <td><span data-bind="text: location"></span></td>
+            <td><a href='#' data-bind="click: $root.deletePeople">Delete</a></td>
+        </tr>
+    </tbody>
+</table>
