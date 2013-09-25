@@ -20,12 +20,15 @@
 
         peopleEntity.prototype.constructor = peopleEntity;
 
-        function demo4ViewModel() { }
+        function demo4ViewModel() {
+            var self = this;
+            self.deletePeople = function (ppl) {
+                self.dataSource.remove(ppl);
+            }
+        }
         demo4ViewModel.prototype = {
             dataSource: ko.observableArray(),
-            deletePeople: function (ppl) {
-                this.dataSource.remove(ppl);
-            }
+            deletePeople: null
         };
         demo4ViewModel.prototype.constructor = demo4ViewModel;
 
