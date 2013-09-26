@@ -83,6 +83,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\SystemCatalog.cs" />
     <Compile Include="Models\TestDropDownModel.cs" />
     <Compile Include="Models\TestRole.cs" />
@@ -288,6 +289,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\KnockoutDemo\demo4.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\KnockoutDemo\demo5.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

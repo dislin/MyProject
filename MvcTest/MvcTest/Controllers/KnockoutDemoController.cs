@@ -30,5 +30,10 @@ namespace MvcTest.Controllers
         {
             return View();
         }
+
+        public ActionResult demo5()
+        {
+            return View();
+        }
     }
 }
