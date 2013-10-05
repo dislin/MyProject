@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Home Page";
 }
+@section JSSection{
+    <script src="@Url.Content("~/CDN/js/View/Home/index.js")" type="text/javascript"></script>
+}
+    <div id="location"></div>
     <div>
         @{
             if (Model.Count > 0)
