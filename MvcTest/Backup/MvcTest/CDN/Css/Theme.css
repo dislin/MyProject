@@ -1,0 +1,46 @@
+﻿.topic
+{
+    display: block;
+    margin: 10px;
+    margin-bottom:3em;
+}
+
+.topic-title 
+{
+    font-size: 1.3em;
+    text-align: left;
+    color: #DC7100;
+    font-weight: bolder;
+    font-family: Courier10BTRoman,Courier,monospace;
+}
+
+.topic-list ul li
+{
+    line-height: 0.5em;
+    text-decoration: none;
+    margin: 0;
+    padding:0;
+}
+
+.topic-list ul li a
+{
+    text-decoration: none;
+    font-family: Courier10BTRoman, Courier, monospace;
+    color: Black;
+}
+
+.topic-list ul li a:hover
+{
+    color: Orange;
+}
+
+#topic-table
+{
+    width: 100%;
+}
+
+#topic-table, #topic-table tr td
+{
+    border: white 0px solid;
+    vertical-align: top;
+    }

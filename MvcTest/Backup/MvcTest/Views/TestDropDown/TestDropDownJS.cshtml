@@ -1,0 +1,16 @@
+﻿@using MvcTest.Models
+@using MvcTest.Controllers;
+@model TestDropDownModel
+@{
+    ViewBag.Title = "TestDropDownJS";
+}
+@section JSSection{
+    <script src="@Url.Content("~/CDN/js/View/TestDropDown/TestDropDownJS.js")" type="text/javascript"></script>
+}
+<h2>TestDropDownJS</h2>
+
+    @Html.DropDownListFor(x => x.intMemberID, Model.selMemberList, new {@class="xxx"})
+
+<br />
+<table id="Content">
+</table>

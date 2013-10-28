@@ -1,0 +1,27 @@
+﻿@using MvcTest.Models
+@using MvcTest.Controllers;
+@model TestDropDownModel
+@{
+    ViewBag.Title = "TestDropDown";
+}
+
+<h2>TestDropDown</h2>
+
+<form method="post" action="../TestDropDown/TestDropDown">
+    @Html.DropDownListFor(x => x.intMemberID, Model.selMemberList)
+    <input type ="submit" value="OutputLog" />
+</form>
+<br />
+<table>
+@{
+    foreach(TestMember m in Model.oMemberList)
+    {
+        <tr>
+            <td>ID: @m.Id</td>
+            <td>Name: @m.Name</td>
+            <td>Age: @m.Age</td>
+            <td>Name: @m.Sex</td>
+        </tr>
+    }
+}
+</table>

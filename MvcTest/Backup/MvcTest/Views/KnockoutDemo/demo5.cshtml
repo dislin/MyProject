@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Dynamic Data List demo";
+}
+@section JSSection{
+    <script src="@Url.Content("~/CDN/js/Lib/knockout-2.3.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/CDN/js/View/KnockoutDemo/demo5.js")" type="text/javascript"></script>
+}
+<h2>Dynamic Data List demo</h2>
+ <table>
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Event</th>
+        </tr>
+    </thead>
+    <div>
+        <input id="btnRefresh" type="button" value="Refresh" />
+    </div>
+    <p />
+    <tbody data-bind="foreach: dataSource">
+        <tr>
+            <td><span data-bind="text: ProductId"></span></td>
+            <td><span data-bind="text: ProductName"></span></td>
+            <td><span data-bind="text: Price"></span></td>
+            <td><span data-bind="text: Quantity"></span></td>
+            <td><a href='#' class="del-btn" data-bind="attr: { pid: ProductId}">Delete</a></td>
+        </tr>
+    </tbody>
+</table>
