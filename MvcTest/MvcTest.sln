@@ -1,18 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTest", "MvcTest\MvcTest.csproj", "{C552CE40-F8B9-479F-8AAF-E4A4800330E5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "..\Authentication\Authentication\Authentication.csproj", "{1D6BB07C-644D-462C-8E76-F90C89D9C241}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationTest", "AuthenticationTest\AuthenticationTest.csproj", "{84B6147A-6601-46EA-B2B8-A5E0D961881C}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2857142-E9E9-4986-B24E-025FB8599B31}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		MvcTest.vsmdi = MvcTest.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTest", "MvcTest\MvcTest.csproj", "{C552CE40-F8B9-479F-8AAF-E4A4800330E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "..\Authentication\Authentication\Authentication.csproj", "{1D6BB07C-644D-462C-8E76-F90C89D9C241}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationTest", "AuthenticationTest\AuthenticationTest.csproj", "{84B6147A-6601-46EA-B2B8-A5E0D961881C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzNets.Library", "..\EzNets\EzNets.Library\EzNets.Library.csproj", "{B0D7208E-3550-4333-BDCD-78B0A311FCEB}"
 EndProject
