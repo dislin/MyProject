@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using HtmlAgilityPack;
 
 namespace MvcTest.Controllers
 {
@@ -67,35 +68,43 @@ namespace MvcTest.Controllers
         }
 
         public ActionResult WebSiteParserTest2() {
-            string txtContent = getHTML(@"http://www.wclc.com/winning-numbers/keno.htm?drawNum=854712");
-            string[] arrContent = txtContent.Split(new string[] { "<table class=\"kenoTable\">" }, StringSplitOptions.None);
-            txtContent = arrContent[1];
-            arrContent = txtContent.Split(new string[] { "</table>" }, StringSplitOptions.None);
-            txtContent = arrContent[0];
-            arrContent = txtContent.Split(new string[] { "</tr>" }, StringSplitOptions.None);
-            txtContent = arrContent[1];
+            //string txtContent = getHTML(@"http://www.wclc.com/winning-numbers/keno.htm?drawNum=854712");
+            //string[] arrContent = txtContent.Split(new string[] { "<table class=\"kenoTable\">" }, StringSplitOptions.None);
+            //txtContent = arrContent[1];
+            //arrContent = txtContent.Split(new string[] { "</table>" }, StringSplitOptions.None);
+            //txtContent = arrContent[0];
+            //arrContent = txtContent.Split(new string[] { "</tr>" }, StringSplitOptions.None);
+            //txtContent = arrContent[1];
 
-            txtContent = txtContent.Replace("<tr>", "");
-            txtContent = txtContent.Replace(" ", "");
-            txtContent = txtContent.Replace("class=\"kenoDrawNumber\"", "");
-            txtContent = txtContent.Replace("<", "_{");
-            txtContent = txtContent.Replace(">", "}_");
-            txtContent = txtContent.Replace("\r", "");
-            txtContent = txtContent.Replace("\n", "");
-            txtContent = txtContent.Replace("\t", "");
-            txtContent = txtContent.Replace("{/td}_", "{/td}_ ");
+            //txtContent = txtContent.Replace("<tr>", "");
+            //txtContent = txtContent.Replace(" ", "");
+            //txtContent = txtContent.Replace("class=\"kenoDrawNumber\"", "");
+            //txtContent = txtContent.Replace("<", "_{");
+            //txtContent = txtContent.Replace(">", "}_");
+            //txtContent = txtContent.Replace("\r", "");
+            //txtContent = txtContent.Replace("\n", "");
+            //txtContent = txtContent.Replace("\t", "");
+            //txtContent = txtContent.Replace("{/td}_", "{/td}_ ");
 
-            string txtPattern = @"\b_{td}_(?<num>\S*)_{/td}_\b", tmpString="";
+            //string txtPattern = @"\b_{td}_(?<num>\S*)_{/td}_\b", tmpString="";
 
-            MatchCollection matches = Regex.Matches(txtContent, txtPattern);
-            foreach (Match match in matches)
-            {
-                GroupCollection groups = match.Groups;
-                tmpString += groups["num"].Value + ",";
+            //MatchCollection matches = Regex.Matches(txtContent, txtPattern);
+            //foreach (Match match in matches)
+            //{
+            //    GroupCollection groups = match.Groups;
+            //    tmpString += groups["num"].Value + ",";
                 
-            }
-            ViewBag.Content = tmpString.Substring(0, tmpString.Length - 1);
+            //}
+            //ViewBag.Content = tmpString.Substring(0, tmpString.Length - 1);
             //ViewBag.Content = txtContent;
+
+            XmlDocument xmlDoc = getXMLDoc(@"http://www.wclc.com/winning-numbers/keno.htm?drawNum=854712", "/html/body/div/div/div[2]/table[2]");
+            XmlNode xNode = xmlDoc.SelectSingleNode("roots/tr[2]");
+            int intCount = xNode.SelectNodes("td").Count;
+            foreach (XmlNode node in xNode.SelectNodes("td")) {
+                ViewBag.Content2 += node.InnerText + ",";
+            }
+
             return View();
         }
 
@@ -137,6 +146,25 @@ namespace MvcTest.Controllers
             }
 
             return txtContent;
+        }
+
+        internal XmlDocument getXMLDoc(string Url, string xPath) {
+            string txtContent = this.getHTML(Url);
+            txtContent = txtContent.Replace("\r", "");
+            txtContent = txtContent.Replace("\n", "");
+            txtContent = txtContent.Replace("\t", "");
+            txtContent = Regex.Replace(txtContent, "<Html", "<html", RegexOptions.IgnoreCase);
+            txtContent = Regex.Replace(txtContent, "</Html", "</html", RegexOptions.IgnoreCase);
+            txtContent = Regex.Replace(txtContent, "<BODY", "<body", RegexOptions.IgnoreCase);
+            txtContent = Regex.Replace(txtContent, "</BODY", "</body", RegexOptions.IgnoreCase);
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(txtContent);
+            HtmlDocument htmlDoct = new HtmlDocument();
+            htmlDoct.LoadHtml(doc.DocumentNode.SelectSingleNode(xPath).InnerHtml);
+            txtContent = "<roots>" + htmlDoct.DocumentNode.InnerHtml + "</roots>";
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(txtContent);
+            return xmlDoc;
         }
     }
 }
