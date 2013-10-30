@@ -123,6 +123,7 @@
     <Content Include="CDN\Css\jquery-ui-lightness\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="CDN\Css\Theme.css" />
     <Content Include="CDN\Images\bg.jpg" />
+    <Content Include="CDN\Js\Common.js" />
     <Content Include="CDN\Js\Lib\jquery-1.10.2.js" />
     <Content Include="CDN\Js\Lib\jquery-1.6.4-vsdoc.js" />
     <Content Include="CDN\Js\Lib\jquery-1.6.4.js" />
@@ -331,6 +332,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Test\WebSiteParserTest2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Test\JavascriptTest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

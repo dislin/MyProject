@@ -68,6 +68,7 @@ namespace MvcTest.Controllers
         }
 
         public ActionResult WebSiteParserTest2() {
+            #region Old Code
             //string txtContent = getHTML(@"http://www.wclc.com/winning-numbers/keno.htm?drawNum=854712");
             //string[] arrContent = txtContent.Split(new string[] { "<table class=\"kenoTable\">" }, StringSplitOptions.None);
             //txtContent = arrContent[1];
@@ -93,10 +94,11 @@ namespace MvcTest.Controllers
             //{
             //    GroupCollection groups = match.Groups;
             //    tmpString += groups["num"].Value + ",";
-                
+
             //}
             //ViewBag.Content = tmpString.Substring(0, tmpString.Length - 1);
-            //ViewBag.Content = txtContent;
+            //ViewBag.Content = txtContent; 
+            #endregion
 
             XmlDocument xmlDoc = getXMLDoc(@"http://www.wclc.com/winning-numbers/keno.htm?drawNum=854712", "/html/body/div/div/div[2]/table[2]");
             XmlNode xNode = xmlDoc.SelectSingleNode("roots/tr[2]");
@@ -105,6 +107,10 @@ namespace MvcTest.Controllers
                 ViewBag.Content2 += node.InnerText + ",";
             }
 
+            return View();
+        }
+
+        public ActionResult JavascriptTest() {
             return View();
         }
 
