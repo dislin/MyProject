@@ -262,7 +262,7 @@ var MyFunction = {
             var txtBrowserVersion = MyFunction.getBrowserVersion();
             if (txtBrowserVersion == myBrowserVersion.IE6.Value || txtBrowserVersion == myBrowserVersion.IE7.Value) {
                 if ($.jStorage == null) {
-                    new Error("Your browser not support HTML5, please use Chrome or FireFox, or import jStorage.js in your IE.")
+                    throw new Error("Your browser not support HTML5, please use Chrome or FireFox, or import jStorage.js in your IE.")
                 }
                 return false;
             } else {

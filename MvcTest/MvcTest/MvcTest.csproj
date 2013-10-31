@@ -154,6 +154,7 @@
     <Content Include="CDN\Js\Lib\modernizr-1.7.min.js" />
     <Content Include="CDN\Js\View\KnockoutDemo\demo5.js" />
     <Content Include="CDN\Js\View\TestDropDown\TestDropDownJS.js" />
+    <Content Include="CDN\Js\View\Test\JavascriptTest.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -294,7 +295,9 @@
     <Content Include="Views\TestConfig\ObjectConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configuration\SystemCatalog.config" />
+    <Content Include="Configuration\SystemCatalog.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\Exception.config" />

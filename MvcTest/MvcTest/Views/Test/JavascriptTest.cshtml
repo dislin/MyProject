@@ -2,10 +2,7 @@
     ViewBag.Title = "JavascriptTest";
 }
 @section JSSection{
-    <script language="javascript" type="text/javascript">
-    $(function(){
-        new dialog().alert("test");
-    });
-    </script>
+    <script src="@Url.Content("~/CDN/js/View/Test/JavascriptTest.js")" type="text/javascript"></script>
 }
 <h2>JavascriptTest</h2>
+<input id="btn1" type="button" value="pop Confirm with cancel btn" />
