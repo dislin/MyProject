@@ -1,0 +1,29 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>myoo</Title>
+    <Author>Leo</Author>
+    <Shortcut>myoo</Shortcut>
+    <Description>Code snippet for a object orint template</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+        <Literal>
+            <ID>ObjectName</ID>
+            <ToolTip>ObjectName</ToolTip>
+            <Default>ObjectName</Default>
+        </Literal>
+    </Declarations>
+    <Code Language="JavaScript">
+        <![CDATA[
+    //#region $ObjectName$
+    function $ObjectName$() {}
+    $ObjectName$.prototype = {
+    };
+    $ObjectName$.prototype.constructor = $ObjectName$;
+    //#endregion$end$]]></Code>
+  </Snippet>
+</CodeSnippet>

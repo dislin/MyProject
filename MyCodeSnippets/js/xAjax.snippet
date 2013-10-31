@@ -1,0 +1,41 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>xAjax</Title>
+    <Author>Leo</Author>
+    <Shortcut>xajax</Shortcut>
+    <Description>Code snippet for an ajax function call, and use Xuenn ajax function</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+        <Literal>
+            <ID>path</ID>
+            <ToolTip>Path</ToolTip>
+            <Default>path</Default>
+        </Literal>
+        <Literal>
+            <ID>parameter</ID>
+            <ToolTip>Parameter</ToolTip>
+            <Default>parameter</Default>
+        </Literal>
+        <Literal>
+            <ID>setting</ID>
+            <ToolTip>Setting</ToolTip>
+            <Default>setting</Default>
+        </Literal>
+    </Declarations>
+    <Code Language="JavaScript">
+        <![CDATA[
+    Utility.service("$path$",
+        JSON.stringify($parameter$),
+        {
+            async: false,
+            $setting$
+        },
+        function (data) {
+        });$end$]]></Code>
+  </Snippet>
+</CodeSnippet>

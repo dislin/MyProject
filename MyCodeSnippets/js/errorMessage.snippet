@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <Header>
+        <Title>errorMessage</Title>
+        <Author>Leo</Author>
+        <Shortcut>errorMessage</Shortcut>
+        <Description>Code snippet for show the error message</Description>
+        <SnippetTypes>
+            <SnippetType>Expansion</SnippetType>
+            <SnippetType>SurroundsWith</SnippetType>
+        </SnippetTypes>
+    </Header>
+    <Snippet>
+        <Declarations>
+            <Literal>
+                <ID>message</ID>
+                <ToolTip>message</ToolTip>
+                <Default>message</Default>
+            </Literal>
+        </Declarations>
+        <Code Language="JavaScript">
+            <![CDATA[throw new Error("$message$");$end$]]>
+        </Code>
+    </Snippet>
+</CodeSnippet>

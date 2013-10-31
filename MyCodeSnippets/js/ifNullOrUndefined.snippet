@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <Header>
+        <Title>ifNullOrUndefined</Title>
+        <Author>Leo</Author>
+        <Shortcut>ifNullOrUndefined</Shortcut>
+        <Description>Code snippet for if variable is null or undefined</Description>
+        <SnippetTypes>
+            <SnippetType>Expansion</SnippetType>
+            <SnippetType>SurroundsWith</SnippetType>
+        </SnippetTypes>
+    </Header>
+    <Snippet>
+        <Declarations>
+            <Literal>
+                <ID>variable</ID>
+                <ToolTip>variable</ToolTip>
+                <Default>variable</Default>
+            </Literal>
+        </Declarations>
+        <Code Language="JavaScript">
+            <![CDATA[if ($variable$ === null || $variable$ === undefined) {
+            }$end$]]>
+        </Code>
+    </Snippet>
+</CodeSnippet>

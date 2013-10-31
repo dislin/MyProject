@@ -1,0 +1,23 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>jslink</Title>
+    <Author>Leo</Author>
+    <Shortcut>jslink</Shortcut>
+    <Description>Markup snippet for js link</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+        <Literal>
+            <ID>path</ID>
+            <ToolTip>path</ToolTip>
+            <Default>path</Default>
+        </Literal>
+    </Declarations>
+
+    <Code Language="html"><![CDATA[<script src="@Url.Content("~/CDN/js/$path$")" type="text/javascript"></script>]]></Code>
+  </Snippet>
+</CodeSnippet>

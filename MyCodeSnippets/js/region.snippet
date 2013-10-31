@@ -1,0 +1,26 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>region</Title>
+    <Author>Leo</Author>
+    <Shortcut>region</Shortcut>
+    <Description>Code snippet for Region</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+      <SnippetType>SurroundsWith</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+        <Literal>
+            <ID>name</ID>
+            <ToolTip>Region name</ToolTip>
+            <Default>MyRegion</Default>
+        </Literal>
+    </Declarations>
+    <Code Language="JavaScript">
+        <![CDATA[
+    //#region $name$
+        $selected$ $end$
+    //#endregion]]></Code>
+  </Snippet>
+</CodeSnippet>
