@@ -20,7 +20,7 @@
         <div id="footer">
         </div>
     </div>
-    <script src="@Url.Content("~/CDN/js/Lib/jquery-1.10.2.js")" type="text/javascript"></script>
+    @Html.RenderScript("Lib/jquery-1.10.2.js")
     <script src="@Url.Content("~/CDN/js/Lib/jquery-ui-1.10.3.custom.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/CDN/js/Common.js")" type="text/javascript"></script>
     @RenderSection("JSSection", false)
