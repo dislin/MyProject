@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Xml;
 using MvcTest.Models;
 using System.Reflection;
-using MvcTest.App_Code.Enum;
+using MvcTest.AppCode.Enum;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;

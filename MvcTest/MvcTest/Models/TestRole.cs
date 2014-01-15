@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvcTest.Controllers;
-using MvcTest.App_Code.Enum;
+using MvcTest.AppCode.Enum;
 using System.Xml.Serialization;
 
 namespace MvcTest.Models

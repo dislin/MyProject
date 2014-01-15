@@ -9,9 +9,9 @@ using System.ComponentModel;
 using System.Reflection;
 
 
-namespace MvcTest.App_Code.Common
+namespace MvcTest.AppCode.Common
 {
-    public static class Extensions
+    public static class HtmlExtensions
     {
         public static int ToInt(this object obj) 
         {

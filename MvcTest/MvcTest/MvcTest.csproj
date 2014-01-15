@@ -78,9 +78,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\Common\Extensions.cs" />
-    <Compile Include="App_Code\Enum\CommonEnum.cs" />
-    <Compile Include="App_Code\DBHelper.cs" />
+    <Compile Include="AppCode\Common\HtmlExtensions.cs" />
+    <Compile Include="AppCode\ConfigHelper.cs" />
+    <Compile Include="AppCode\DBHelper.cs" />
+    <Compile Include="AppCode\Enum\CommonEnum.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AngularJSController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
