@@ -1,5 +1,16 @@
 ﻿@{
     ViewBag.Title = "Demo1";
 }
-
+@section JSSection{
+    <script src="@Url.Content("~/CDN/Js/Lib/angular-1.2.4/angular.js")"></script>
+    <script src="@Url.Content("~/CDN/Js/View/AngularJS/Demo1.js")"></script>
+}
 <h2>Demo1</h2>
+<div ng-app>
+    <div ng-controller="demo1Controller">
+        <span id="txtSaySomething" ng-bind="model.saySomething"></span><p />
+        age:<span ng-bind="model.age" ng-show="model.isShowAge"></span> <input id="age" type="text" ng-model="model.age" />
+        <input id="btn1" type="button" value="Add 1 year" ng-click="model.addOneYearOld()"/>
+    </div>
+</div>
+

@@ -16,5 +16,14 @@ namespace MvcTest.Controllers
             return View();
         }
 
+        public ActionResult Demo2()
+        {
+            return View();
+        }
+
+        public ActionResult Demo3()
+        {
+            return View();
+        }
     }
 }

@@ -271,6 +271,47 @@ var MyFunction = {
         }
     },
     //#endregion
+
+    //#region formatHelper
+    formatHelper: {
+        decimal: function (num) {
+            if (isNaN(num) && num != 0) {
+                throw Error("Please enter a number. Data type should be Number");
+            }
+
+            num = num.toFixed(5); // fix javascript add tnum have many decimal issue, eg: 67.6 + 11.1 = 78.6999999999999 instead numf 78.7
+            num = parseFloat(num);
+            num = Math.floor(num * 1000) / 1000; // truncate and get first 3 decimal, 3.66666666 -> 3.666
+            num = num + "";
+
+            if (num.indexOf(".") != -1) {
+                if (num.substr(-1) == "0") { num = num.slice(0, -1); }
+                if (num.substr(-1) == "0") { num = num.slice(0, -1); }
+                if (num.substr(-1) == "0") { num = num.slice(0, -1); }
+                if (num.substr(-1) == "0") { num = num.slice(0, -1); }
+                if (num.substr(-2) == ".0") { num = num.slice(0, -2); }
+            }
+
+            return num;
+        },
+
+        dateTime: function (dt, sign) {
+            var txtDt = "",
+                dtTime = null;
+            if (typeof (dt) !== "object") {
+                throw Error("Please check your data type should be Date");
+            }
+
+            if (sign === "" || sign === undefined || sign === null) {
+                sign = "/"
+            }
+
+            dtTime = new Date(dt);
+            txtDt = dtTime.getFullYear() + sign + String.LeftPad((dtTime.getMonth() + 1), "0", 2) + sign + String.LeftPad(dtTime.getDate(), "0", 2) + " " + String.LeftPad(dtTime.getHours(), "0", 2) + ":" + String.LeftPad(dtTime.getMinutes(), "0", 2) + ":" + String.LeftPad(dtTime.getSeconds(), "0", 2);
+            return txtDt;
+        }
+    }
+    //#endregion
 };
 
 var myBrowserVersion = {

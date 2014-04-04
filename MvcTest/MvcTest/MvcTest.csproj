@@ -787,6 +787,9 @@
     <Content Include="CDN\Js\Lib\MicrosoftMvcValidation.js" />
     <Content Include="CDN\Js\Lib\modernizr-1.7.js" />
     <Content Include="CDN\Js\Lib\modernizr-1.7.min.js" />
+    <Content Include="CDN\Js\View\AngularJS\Demo1.js" />
+    <Content Include="CDN\Js\View\AngularJS\Demo2.js" />
+    <Content Include="CDN\Js\View\AngularJS\Demo3.js" />
     <Content Include="CDN\Js\View\KnockoutDemo\demo5.js" />
     <Content Include="CDN\Js\View\TestDropDown\TestDropDownJS.js" />
     <Content Include="CDN\Js\View\Test\JavascriptTest.js" />
@@ -868,6 +871,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CDN\Js\View\Mobile\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1004,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\AngularJS\Partial\_CommonJS.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AngularJS\Demo2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AngularJS\Demo3.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

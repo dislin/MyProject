@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Demo2";
+}
+@section CSSSection{
+    <style type="text/css">
+        .highlight {
+            background-color: #fef08e;
+            font-weight: bolder;
+        }
+    </style>
+}
+@section JSSection{
+    <script src="@Url.Content("~/CDN/Js/Lib/angular-1.2.4/angular.js")"></script>
+    <script src="@Url.Content("~/CDN/Js/View/AngularJS/Demo2.js")"></script>
+}
+<h2>Demo2</h2>
+
+<div ng-app>
+    <div ng-controller="Demo2Controller">
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment Name</th>
+                    <th>Charge</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="item in DataList">
+                <tr ng-class="{highlight: item.isPay}">
+                    <td><span ng-bind="item.name"></span></td>
+                    <td><span ng-bind="item.charge"></span></td>
+                    <td><span ng-bind="model.getDateFormat(item.dueDate)"></span></td>
+                    <td><input type="checkbox" ng-model="item.isPay" /><span ng-bind="model.getStatus(item.isPay)"></span></td>
+                </tr>
+            </tbody>
+
+        </table>
+        <p />
+        <div>
+            Paid List: <span ng-bind="model.showPaid(DataList)"></span>
+        </div>
+    </div>
+</div>
